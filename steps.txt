@@ -1,0 +1,9 @@
+Resources:
+https://developer.garmin.com/connect-iq/reference-guides/visual-studio-code-extension/
+https://developer.garmin.com/connect-iq/sdk/
+https://www.java.com/en/download/
+
+- Downloaded VS Code extension
+- Installed java
+- Installed sdk
+- Pointed Java path
