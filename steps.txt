@@ -3,7 +3,12 @@ https://developer.garmin.com/connect-iq/reference-guides/visual-studio-code-exte
 https://developer.garmin.com/connect-iq/sdk/
 https://www.java.com/en/download/
 
+- Open Workspace Folder 
 - Downloaded VS Code extension
 - Installed java
 - Installed sdk
 - Pointed Java path
+- Monkey C: New Project	
+- Manifest.xml -> Added model type + lang.
+- Run without debugging
+- Adding bin to ignore
