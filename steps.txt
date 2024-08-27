@@ -12,3 +12,5 @@ https://www.java.com/en/download/
 - Manifest.xml -> Added model type + lang.
 - Run without debugging
 - Adding bin to ignore
+- CTRL + F5 - Debug
+
