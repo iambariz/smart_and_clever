@@ -42,7 +42,7 @@ class smartAndCleverView extends WatchUi.WatchFace {
         // Update the view
         var view = View.findDrawableById("TimeLabel") as Text;
         view.setColor(getApp().getProperty("ForegroundColor") as Number);
-        view.setText(timeString);
+        // view.setText(timeString);
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
