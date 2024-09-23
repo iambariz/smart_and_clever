@@ -2,6 +2,7 @@ import Toybox.Application;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
+import Toybox.Weather;
 
 class Background extends WatchUi.Drawable {
     function initialize() {
@@ -38,6 +39,19 @@ class Background extends WatchUi.Drawable {
         var centerY = screenHeight / 2;
         var radius = calculateRadius(screenWidth, screenHeight);
             dc.setPenWidth(3);
+        // var temperature = getApp().getProperty("CurrentTemperature");
+        var temp = Weather.getCurrentConditions().temperature;
+
+
+        // var temp1  = Lang.format("$1$", [temp]);
+
+        
+        System.println(1);
+        // var tempStr = Lang.format("$1$°C", [temp]);
+        // System.println(tempStr.format("%.2f"));
+
+        // Draw weather information
+        drawWeather(dc, centerX, centerY, temp);
 
 
         // Draw the ticks
@@ -74,4 +88,28 @@ class Background extends WatchUi.Drawable {
         var radius = (screenWidth < screenHeight ? screenWidth : screenHeight) / 2 - 20;
         return radius;
     }
+function drawWeather(dc as Dc, centerX, centerY, temperature) {
+    dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+
+    // Assuming the temperature data is a string like "21°C"
+    // var tempStr = Lang.format("%.1f°C", temperature);
+    // System.println(tempStr);
+
+        System.println(Lang.Float);
+
+        
+
+        // var tempStr = 123;
+
+        var tempStr = temperature.format("%.1f") + "°C";
+
+
+        // System.println(tempStr.toFloat());
+
+    // Draw the text centered horizontally and adjust vertically
+    dc.drawText(centerX, centerY + 50, Graphics.FONT_SYSTEM_MEDIUM, tempStr, Graphics.TEXT_JUSTIFY_CENTER);
+}
+
+
+
 }
