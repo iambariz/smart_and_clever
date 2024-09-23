@@ -55,7 +55,7 @@ class Background extends WatchUi.Drawable {
         // Draw weather information
         drawWeather(dc, centerX, centerY, temp);
 
-        drawDate(dc, screenWidth * 0.75 , centerY /2, temp);
+        drawDate(dc, screenWidth * 0.75 , centerY, temp);
 
 
         // Draw the ticks
@@ -111,20 +111,20 @@ function drawWeather(dc as Dc, centerX, centerY, temperature) {
         // System.println(tempStr.toFloat());
 
     // Draw the text centered horizontally and adjust vertically
-    dc.drawText(centerX, centerY + 50, Graphics.FONT_SYSTEM_MEDIUM, tempStr, Graphics.TEXT_JUSTIFY_CENTER);
+    dc.drawText(centerX, centerY + 75, Graphics.FONT_SYSTEM_XTINY, tempStr, Graphics.TEXT_JUSTIFY_CENTER);
 }
 
     function drawDate(dc as Dc, centerX, centerY, temperature) {
         var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
         var dateString = Lang.format(
-    "$1$ $2$",
-    [
-        today.day_of_week,
-        today.day,
-    ]
-);
+        "$1$ $2$",
+        [
+            today.day_of_week,
+            today.day,
+        ]
+        );
 
-        dc.drawText(centerX, centerY + 50, Graphics.FONT_SYSTEM_XTINY, dateString, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX, centerY -20, Graphics.FONT_SYSTEM_XTINY, dateString, Graphics.TEXT_JUSTIFY_CENTER);
     }
 
 
