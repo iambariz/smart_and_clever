@@ -46,6 +46,18 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.ShowDayOfWeek" title="@Strings.ShowDayOfWeekTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.ShowDayNumber" title="@Strings.ShowDayNumberTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.ShowDateBorder" title="@Strings.ShowDateBorderTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.ShowTemperature" title="@Strings.ShowTemperatureTitle">
         <settingConfig type="boolean" />
     </setting>

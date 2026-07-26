@@ -9,6 +9,9 @@
     <property id="ShowHourHand" type="boolean">true</property>
     <property id="ShowMinuteHand" type="boolean">true</property>
     <property id="ShowDateComplication" type="boolean">true</property>
+    <property id="ShowDayOfWeek" type="boolean">true</property>
+    <property id="ShowDayNumber" type="boolean">true</property>
+    <property id="ShowDateBorder" type="boolean">true</property>
     <property id="ShowTemperature" type="boolean">true</property>
 
 </properties>

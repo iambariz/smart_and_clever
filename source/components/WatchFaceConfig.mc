@@ -9,6 +9,9 @@ class WatchFaceConfig {
     var hourHandDisplay as DisplayStyle;
     var minuteHandDisplay as DisplayStyle;
     var dateDisplay as DisplayStyle;
+    var dayOfWeekDisplay as DisplayStyle;
+    var dayNumberDisplay as DisplayStyle;
+    var dateBorderDisplay as DisplayStyle;
     var temperatureDisplay as DisplayStyle;
 
     function initialize(
@@ -17,6 +20,9 @@ class WatchFaceConfig {
         hourHandDisplay as DisplayStyle,
         minuteHandDisplay as DisplayStyle,
         dateDisplay as DisplayStyle,
+        dayOfWeekDisplay as DisplayStyle,
+        dayNumberDisplay as DisplayStyle,
+        dateBorderDisplay as DisplayStyle,
         temperatureDisplay as DisplayStyle
     ) {
         self.numeralStyle = numeralStyle;
@@ -24,6 +30,9 @@ class WatchFaceConfig {
         self.hourHandDisplay = hourHandDisplay;
         self.minuteHandDisplay = minuteHandDisplay;
         self.dateDisplay = dateDisplay;
+        self.dayOfWeekDisplay = dayOfWeekDisplay;
+        self.dayNumberDisplay = dayNumberDisplay;
+        self.dateBorderDisplay = dateBorderDisplay;
         self.temperatureDisplay = temperatureDisplay;
     }
 }

@@ -10,6 +10,9 @@
     <string id="ShowHourHandTitle">Show Hour Hand</string>
     <string id="ShowMinuteHandTitle">Show Minute Hand</string>
     <string id="ShowDateComplicationTitle">Show Day/Date</string>
+    <string id="ShowDayOfWeekTitle">Show Day of Week</string>
+    <string id="ShowDayNumberTitle">Show Day Number</string>
+    <string id="ShowDateBorderTitle">Show Day/Date Border</string>
     <string id="ShowTemperatureTitle">Show Temperature</string>
 
     <string id="ColorBlack">Black</string>

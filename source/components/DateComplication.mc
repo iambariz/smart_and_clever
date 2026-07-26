@@ -4,18 +4,29 @@ import Toybox.Time;
 import Toybox.Time.Gregorian;
 
 // Day/date window at the 3 o'clock mark, like a classic day-date dial.
+// Day-of-week, day-number, and the border are each independently toggleable;
+// the box always sizes itself to whichever combination ends up shown.
 class DateComplication extends WatchFaceElement {
+    var showDayOfWeek as Boolean;
+    var showDayNumber as Boolean;
+    var showBorder as Boolean;
+
     function initialize(config as WatchFaceConfig) {
         WatchFaceElement.initialize(config.dateDisplay);
+        showDayOfWeek = config.dayOfWeekDisplay == DISPLAY_SHOWN;
+        showDayNumber = config.dayNumberDisplay == DISPLAY_SHOWN;
+        showBorder = config.dateBorderDisplay == DISPLAY_SHOWN;
     }
 
     function draw(dc as Dc) as Void {
+        var dateString = buildDateString();
+        if (dateString.equals("")) {
+            return;
+        }
+
         var centerX = DialGeometry.centerX(dc);
         var centerY = DialGeometry.centerY(dc);
         var radius = DialGeometry.radius(dc);
-
-        var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
-        var dateString = Lang.format("$1$ $2$", [today.day_of_week, today.day]);
 
         var font = Graphics.FONT_XTINY;
         var textDimensions = dc.getTextDimensions(dateString, font);
@@ -31,7 +42,22 @@ class DateComplication extends WatchFaceElement {
         var boxCenterY = centerY;
 
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawRectangle(boxCenterX - boxWidth / 2, boxCenterY - boxHeight / 2, boxWidth, boxHeight);
+        if (showBorder) {
+            dc.drawRectangle(boxCenterX - boxWidth / 2, boxCenterY - boxHeight / 2, boxWidth, boxHeight);
+        }
         dc.drawText(boxCenterX, boxCenterY - textHeight / 2, font, dateString, Graphics.TEXT_JUSTIFY_CENTER);
+    }
+
+    function buildDateString() as String {
+        var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+
+        if (showDayOfWeek && showDayNumber) {
+            return Lang.format("$1$ $2$", [today.day_of_week, today.day]);
+        } else if (showDayOfWeek) {
+            return today.day_of_week;
+        } else if (showDayNumber) {
+            return today.day.format("%d");
+        }
+        return "";
     }
 }
