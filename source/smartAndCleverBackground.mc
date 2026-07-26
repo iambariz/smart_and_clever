@@ -25,7 +25,8 @@ class Background extends WatchUi.Drawable {
             displayStyleFromBoolean(app.getProperty("ShowDayOfWeek") as Boolean),
             displayStyleFromBoolean(app.getProperty("ShowDayNumber") as Boolean),
             displayStyleFromBoolean(app.getProperty("ShowDateBorder") as Boolean),
-            displayStyleFromBoolean(app.getProperty("ShowTemperature") as Boolean)
+            displayStyleFromBoolean(app.getProperty("ShowTemperature") as Boolean),
+            positionFromNumber(app.getProperty("TemperaturePosition") as Number)
         );
 
         elements = [

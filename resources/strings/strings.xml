@@ -14,6 +14,7 @@
     <string id="ShowDayNumberTitle">Show Day Number</string>
     <string id="ShowDateBorderTitle">Show Day/Date Border</string>
     <string id="ShowTemperatureTitle">Show Temperature</string>
+    <string id="TemperaturePositionTitle">Temperature Position</string>
 
     <string id="ColorBlack">Black</string>
     <string id="ColorDarkGray">Dark Gray</string>
@@ -25,5 +26,10 @@
     <string id="NumeralsRoman">Roman (I-XII)</string>
     <string id="NumeralsArabic">Arabic (1-12)</string>
     <string id="NumeralsNone">None</string>
+
+    <string id="PositionTop">Top</string>
+    <string id="PositionRight">Right</string>
+    <string id="PositionBottom">Bottom</string>
+    <string id="PositionLeft">Left</string>
 
 </strings>

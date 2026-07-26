@@ -13,6 +13,7 @@ class WatchFaceConfig {
     var dayNumberDisplay as DisplayStyle;
     var dateBorderDisplay as DisplayStyle;
     var temperatureDisplay as DisplayStyle;
+    var temperaturePosition as Position;
 
     function initialize(
         numeralStyle as NumeralStyle,
@@ -23,7 +24,8 @@ class WatchFaceConfig {
         dayOfWeekDisplay as DisplayStyle,
         dayNumberDisplay as DisplayStyle,
         dateBorderDisplay as DisplayStyle,
-        temperatureDisplay as DisplayStyle
+        temperatureDisplay as DisplayStyle,
+        temperaturePosition as Position
     ) {
         self.numeralStyle = numeralStyle;
         self.hourMarkersDisplay = hourMarkersDisplay;
@@ -34,5 +36,6 @@ class WatchFaceConfig {
         self.dayNumberDisplay = dayNumberDisplay;
         self.dateBorderDisplay = dateBorderDisplay;
         self.temperatureDisplay = temperatureDisplay;
+        self.temperaturePosition = temperaturePosition;
     }
 }
