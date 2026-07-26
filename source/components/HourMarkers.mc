@@ -2,9 +2,24 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.Math;
 
+// Hour markers, styled per WatchFaceConfig.numeralStyle: Roman numerals at
+// every hour, Arabic numbers at every hour, or plain batons (None).
 class HourMarkers extends WatchFaceElement {
-    function initialize() {
+    var style as NumeralStyle;
+
+    const ROMAN_NUMERALS = [
+        "XII", "I", "II", "III", "IV", "V",
+        "VI", "VII", "VIII", "IX", "X", "XI"
+    ];
+
+    const ARABIC_NUMERALS = [
+        "12", "1", "2", "3", "4", "5",
+        "6", "7", "8", "9", "10", "11"
+    ];
+
+    function initialize(config as WatchFaceConfig) {
         WatchFaceElement.initialize();
+        style = config.numeralStyle;
     }
 
     function draw(dc as Dc) as Void {
@@ -17,12 +32,12 @@ class HourMarkers extends WatchFaceElement {
         for (var i = 0; i < 12; i++) {
             var angle = (i * 30 - 90) * Math.PI / 180.0;
 
-            if (i == 0) {
-                drawNumeral(dc, centerX, centerY, radius, angle, "XII");
-            } else if (i == 6) {
-                drawNumeral(dc, centerX, centerY, radius, angle, "VI");
-            } else {
+            if (style == NUMERAL_STYLE_NONE) {
                 drawBaton(dc, centerX, centerY, radius, angle);
+            } else if (style == NUMERAL_STYLE_ARABIC) {
+                drawNumeral(dc, centerX, centerY, radius, angle, ARABIC_NUMERALS[i]);
+            } else {
+                drawNumeral(dc, centerX, centerY, radius, angle, ROMAN_NUMERALS[i]);
             }
         }
     }
@@ -39,6 +54,6 @@ class HourMarkers extends WatchFaceElement {
     function drawNumeral(dc as Dc, centerX as Number, centerY as Number, radius as Number, angle as Float, text as String) as Void {
         var textX = centerX + (radius - 20) * Math.cos(angle);
         var textY = centerY + (radius - 20) * Math.sin(angle);
-        dc.drawText(textX, textY - 10, Graphics.FONT_SMALL, text, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(textX, textY - 10, Graphics.FONT_XTINY, text, Graphics.TEXT_JUSTIFY_CENTER);
     }
 }

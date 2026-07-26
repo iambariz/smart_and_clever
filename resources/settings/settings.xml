@@ -22,4 +22,12 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.NumeralStyle" title="@Strings.NumeralStyleTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.NumeralsRoman</listEntry>
+            <listEntry value="1">@Strings.NumeralsArabic</listEntry>
+            <listEntry value="2">@Strings.NumeralsNone</listEntry>
+        </settingConfig>
+    </setting>
+
 </settings>

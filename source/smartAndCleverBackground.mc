@@ -12,8 +12,12 @@ class Background extends WatchUi.Drawable {
         };
         Drawable.initialize(dictionary);
 
+        var config = new WatchFaceConfig(
+            numeralStyleFromNumber(getApp().getProperty("NumeralStyle") as Number)
+        );
+
         elements = [
-            new HourMarkers(),
+            new HourMarkers(config),
             new ClockHands(),
             new DateComplication(),
             new TemperatureComplication()
