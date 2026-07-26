@@ -5,8 +5,8 @@ import Toybox.Time.Gregorian;
 
 // Day/date window at the 3 o'clock mark, like a classic day-date dial.
 class DateComplication extends WatchFaceElement {
-    function initialize() {
-        WatchFaceElement.initialize();
+    function initialize(config as WatchFaceConfig) {
+        WatchFaceElement.initialize(config.dateDisplay);
     }
 
     function draw(dc as Dc) as Void {

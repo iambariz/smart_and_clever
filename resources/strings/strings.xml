@@ -6,6 +6,11 @@
     <string id="ForegroundColorTitle">Foreground Color</string>
     <string id="MilitaryFormatTitle">Military Format for 24 Hour Time</string>
     <string id="NumeralStyleTitle">Hour Numerals</string>
+    <string id="ShowHourMarkersTitle">Show Hour Markers</string>
+    <string id="ShowHourHandTitle">Show Hour Hand</string>
+    <string id="ShowMinuteHandTitle">Show Minute Hand</string>
+    <string id="ShowDateComplicationTitle">Show Day/Date</string>
+    <string id="ShowTemperatureTitle">Show Temperature</string>
 
     <string id="ColorBlack">Black</string>
     <string id="ColorDarkGray">Dark Gray</string>

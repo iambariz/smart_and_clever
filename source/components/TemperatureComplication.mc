@@ -1,9 +1,10 @@
 import Toybox.Graphics;
+import Toybox.Lang;
 import Toybox.Weather;
 
 class TemperatureComplication extends WatchFaceElement {
-    function initialize() {
-        WatchFaceElement.initialize();
+    function initialize(config as WatchFaceConfig) {
+        WatchFaceElement.initialize(config.temperatureDisplay);
     }
 
     function draw(dc as Dc) as Void {

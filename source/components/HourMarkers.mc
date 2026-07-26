@@ -18,7 +18,7 @@ class HourMarkers extends WatchFaceElement {
     ];
 
     function initialize(config as WatchFaceConfig) {
-        WatchFaceElement.initialize();
+        WatchFaceElement.initialize(config.hourMarkersDisplay);
         style = config.numeralStyle;
     }
 

@@ -3,6 +3,9 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
+// Composes the dial out of independent elements (see WatchFaceElement) -
+// each one owns its own drawing logic; this class just clears the screen
+// and calls draw() on each visible one, in order.
 class Background extends WatchUi.Drawable {
     var elements as Array<WatchFaceElement>;
 
@@ -12,15 +15,22 @@ class Background extends WatchUi.Drawable {
         };
         Drawable.initialize(dictionary);
 
+        var app = getApp();
         var config = new WatchFaceConfig(
-            numeralStyleFromNumber(getApp().getProperty("NumeralStyle") as Number)
+            numeralStyleFromNumber(app.getProperty("NumeralStyle") as Number),
+            displayStyleFromBoolean(app.getProperty("ShowHourMarkers") as Boolean),
+            displayStyleFromBoolean(app.getProperty("ShowHourHand") as Boolean),
+            displayStyleFromBoolean(app.getProperty("ShowMinuteHand") as Boolean),
+            displayStyleFromBoolean(app.getProperty("ShowDateComplication") as Boolean),
+            displayStyleFromBoolean(app.getProperty("ShowTemperature") as Boolean)
         );
 
         elements = [
             new HourMarkers(config),
-            new ClockHands(),
-            new DateComplication(),
-            new TemperatureComplication()
+            new HourHand(config),
+            new MinuteHand(config),
+            new DateComplication(config),
+            new TemperatureComplication(config)
         ] as Array<WatchFaceElement>;
     }
 
@@ -29,7 +39,9 @@ class Background extends WatchUi.Drawable {
         dc.clear();
 
         for (var i = 0; i < elements.size(); i++) {
-            elements[i].draw(dc);
+            if (elements[i].isVisible()) {
+                elements[i].draw(dc);
+            }
         }
     }
 }

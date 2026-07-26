@@ -5,4 +5,10 @@
     <property id="UseMilitaryFormat" type="boolean">false</property>
     <property id="NumeralStyle" type="number">0</property>
 
+    <property id="ShowHourMarkers" type="boolean">true</property>
+    <property id="ShowHourHand" type="boolean">true</property>
+    <property id="ShowMinuteHand" type="boolean">true</property>
+    <property id="ShowDateComplication" type="boolean">true</property>
+    <property id="ShowTemperature" type="boolean">true</property>
+
 </properties>
