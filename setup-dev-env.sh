@@ -79,31 +79,51 @@ exit 1
 WRAPPER
 chmod +x "$SDK_PATH/bin/simulator"
 
-# 7. A manual fallback you can run yourself anytime, from any terminal, if the
-#    simulator ever gets into a bad state: `ciq-sim` force-kills and restarts it.
+# 7. Run the simulator as a systemd --user service that restarts itself
+#    automatically. This is the actual fix for "unable to connect to
+#    simulator" recurring: launching it only on-demand from VS Code's build
+#    step means if it ever dies between builds, nothing brings it back until
+#    the next Ctrl+F5 fails. A supervised service is always there instead.
+mkdir -p ~/.config/systemd/user
+cat > ~/.config/systemd/user/ciq-simulator.service <<'EOF'
+[Unit]
+Description=Connect IQ Simulator (community AppImage build, kept alive persistently)
+
+[Service]
+ExecStart=%h/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage
+Environment=NO_AT_BRIDGE=1
+Restart=always
+RestartSec=2
+StartLimitIntervalSec=60
+StartLimitBurst=10
+
+[Install]
+WantedBy=default.target
+EOF
+systemctl --user daemon-reload
+systemctl --user enable --now ciq-simulator.service
+
+# 8. A manual fallback you can run yourself anytime, from any terminal, to
+#    force a fresh restart of the service.
 if ! grep -q "^ciq-sim()" ~/.bashrc 2>/dev/null; then
 cat >> ~/.bashrc <<'BASHRC'
 
-# Connect IQ Simulator helper - force-kills any stuck instance and starts fresh.
-# Retries a few times: the AppImage's FUSE mount occasionally races and fails
-# on the first attempt even when FUSE itself is fine.
+# Connect IQ Simulator helper - the simulator runs as a systemd --user
+# service (ciq-simulator.service) that restarts itself automatically, so
+# this just asks systemd to restart it rather than managing the process.
 ciq-sim() {
-    pkill -9 -f "AppRun.wrapped" 2>/dev/null
-    sleep 1
-    for attempt in 1 2 3; do
-        NO_AT_BRIDGE=1 nohup ~/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage >/tmp/ciq-simulator.log 2>&1 &
-        disown
-        sleep 2
-        if pgrep -f "AppRun.wrapped" >/dev/null; then
-            echo "Simulator running."
-            return 0
-        fi
-    done
-    echo "Failed to start after 3 attempts. Check /tmp/ciq-simulator.log"
+    systemctl --user restart ciq-simulator.service
+    sleep 2
+    if systemctl --user is-active --quiet ciq-simulator.service; then
+        echo "Simulator running. Leave it alone and go back to VS Code."
+    else
+        echo "Failed to start. Check: systemctl --user status ciq-simulator.service"
+    fi
 }
 BASHRC
 fi
 
 echo "Done. Open this project folder in VS Code, make sure only garmin.monkey-c"
 echo "extension is installed (not ghisguth.monkey-c), and press Ctrl+F5."
-echo "If the simulator ever misbehaves, run 'ciq-sim' in a new terminal."
+echo "The simulator runs as a systemd service and restarts itself automatically."
+echo "If it ever misbehaves anyway, run 'ciq-sim' in a new terminal."

@@ -206,30 +206,64 @@ as a hard failure.
 after launch with an `atk-bridge` warning followed by exit — a known
 GTK-under-Wayland accessibility-bus bug.
 
+### Keep it running persistently with systemd (the actual fix)
+
+Even with the retry logic above, relying on VS Code to launch the simulator
+*on demand* means if it ever dies between builds — crash, you closed the
+window, anything — nothing brings it back until the next Ctrl+F5 tries and
+fails with "unable to connect". That's a whack-a-mole loop.
+
+The real fix: run it as a `systemd --user` service that restarts itself
+automatically, independent of VS Code entirely.
+
+```bash
+mkdir -p ~/.config/systemd/user
+cat > ~/.config/systemd/user/ciq-simulator.service <<'EOF'
+[Unit]
+Description=Connect IQ Simulator (community AppImage build, kept alive persistently)
+
+[Service]
+ExecStart=%h/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage
+Environment=NO_AT_BRIDGE=1
+Restart=always
+RestartSec=2
+StartLimitIntervalSec=60
+StartLimitBurst=10
+
+[Install]
+WantedBy=default.target
+EOF
+systemctl --user daemon-reload
+systemctl --user enable --now ciq-simulator.service
+```
+
+This starts automatically on every login and restarts itself within 2 seconds
+of dying for any reason. Check on it with:
+
+```bash
+systemctl --user status ciq-simulator.service
+```
+
 ### Manual fallback: `ciq-sim`
 
-For when the simulator ever gets stuck anyway, add this to `~/.bashrc`:
+For when you want to force a fresh restart (e.g. after changing simulator
+version), add this to `~/.bashrc`:
 
 ```bash
 ciq-sim() {
-    pkill -9 -f "AppRun.wrapped" 2>/dev/null
-    sleep 1
-    for attempt in 1 2 3; do
-        NO_AT_BRIDGE=1 nohup ~/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage >/tmp/ciq-simulator.log 2>&1 &
-        disown
-        sleep 2
-        if pgrep -f "AppRun.wrapped" >/dev/null; then
-            echo "Simulator running. Leave this window/process alone and go back to VS Code."
-            return 0
-        fi
-    done
-    echo "Failed to start after 3 attempts. Check /tmp/ciq-simulator.log"
+    systemctl --user restart ciq-simulator.service
+    sleep 2
+    if systemctl --user is-active --quiet ciq-simulator.service; then
+        echo "Simulator running. Leave it alone and go back to VS Code."
+    else
+        echo "Failed to start. Check: systemctl --user status ciq-simulator.service"
+    fi
 }
 ```
 
 Then `source ~/.bashrc` (or open a new terminal), and run `ciq-sim` any time
-things seem stuck. This one force-restarts unconditionally — that's fine
-since it's opt-in/manual, unlike the wrapper VS Code invokes automatically.
+you want to force a restart. With the systemd service in place this should
+rarely be necessary — the service manages itself.
 
 ---
 
