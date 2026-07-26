@@ -16,8 +16,9 @@ class TemperatureComplication extends WatchFaceElement {
 
         var temp = Weather.getCurrentConditions().temperature;
         var tempStr = temp.format("%.1f") + "°C";
+        var textHeight = dc.getTextDimensions(tempStr, Graphics.FONT_XTINY)[1];
 
         dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(point[0], point[1], Graphics.FONT_XTINY, tempStr, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(point[0], point[1] - textHeight / 2, Graphics.FONT_XTINY, tempStr, Graphics.TEXT_JUSTIFY_CENTER);
     }
 }

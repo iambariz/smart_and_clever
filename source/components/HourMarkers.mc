@@ -54,6 +54,7 @@ class HourMarkers extends WatchFaceElement {
     function drawNumeral(dc as Dc, centerX as Number, centerY as Number, radius as Number, angle as Float, text as String) as Void {
         var textX = centerX + (radius - 20) * Math.cos(angle);
         var textY = centerY + (radius - 20) * Math.sin(angle);
-        dc.drawText(textX, textY - 10, Graphics.FONT_XTINY, text, Graphics.TEXT_JUSTIFY_CENTER);
+        var textHeight = dc.getTextDimensions(text, Graphics.FONT_XTINY)[1];
+        dc.drawText(textX, textY - textHeight / 2, Graphics.FONT_XTINY, text, Graphics.TEXT_JUSTIFY_CENTER);
     }
 }
