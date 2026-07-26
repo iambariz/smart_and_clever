@@ -54,8 +54,28 @@ already_up() {
 if already_up; then
     exit 0
 fi
+
 export NO_AT_BRIDGE=1   # avoids a GTK accessibility-bridge crash under Wayland
-exec "$HOME/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage" "$@"
+APPIMAGE="$HOME/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage"
+
+# AppImage's FUSE mount occasionally races and fails on first try
+# ("Cannot mount AppImage, please check your FUSE setup") even though FUSE
+# itself is fine - retry a couple of times before giving up.
+for attempt in 1 2 3; do
+    "$APPIMAGE" "$@" &
+    PID=$!
+    for i in $(seq 1 20); do
+        sleep 0.5
+        if already_up; then
+            wait "$PID" 2>/dev/null
+            exit 0
+        fi
+        if ! kill -0 "$PID" 2>/dev/null; then
+            break
+        fi
+    done
+done
+exit 1
 WRAPPER
 chmod +x "$SDK_PATH/bin/simulator"
 
@@ -64,18 +84,22 @@ chmod +x "$SDK_PATH/bin/simulator"
 if ! grep -q "^ciq-sim()" ~/.bashrc 2>/dev/null; then
 cat >> ~/.bashrc <<'BASHRC'
 
-# Connect IQ Simulator helper - force-kills any stuck instance and starts fresh
+# Connect IQ Simulator helper - force-kills any stuck instance and starts fresh.
+# Retries a few times: the AppImage's FUSE mount occasionally races and fails
+# on the first attempt even when FUSE itself is fine.
 ciq-sim() {
     pkill -9 -f "AppRun.wrapped" 2>/dev/null
     sleep 1
-    NO_AT_BRIDGE=1 nohup ~/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage >/tmp/ciq-simulator.log 2>&1 &
-    disown
-    sleep 2
-    if pgrep -f "AppRun.wrapped" >/dev/null; then
-        echo "Simulator running."
-    else
-        echo "Failed to start. Check /tmp/ciq-simulator.log"
-    fi
+    for attempt in 1 2 3; do
+        NO_AT_BRIDGE=1 nohup ~/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage >/tmp/ciq-simulator.log 2>&1 &
+        disown
+        sleep 2
+        if pgrep -f "AppRun.wrapped" >/dev/null; then
+            echo "Simulator running."
+            return 0
+        fi
+    done
+    echo "Failed to start after 3 attempts. Check /tmp/ciq-simulator.log"
 }
 BASHRC
 fi

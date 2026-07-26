@@ -162,8 +162,28 @@ already_up() {
 if already_up; then
     exit 0
 fi
+
 export NO_AT_BRIDGE=1
-exec "$HOME/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage" "$@"
+APPIMAGE="$HOME/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage"
+
+# AppImage's FUSE mount occasionally races and fails on first try
+# ("Cannot mount AppImage, please check your FUSE setup") even though FUSE
+# itself is fine - retry a couple of times before giving up.
+for attempt in 1 2 3; do
+    "$APPIMAGE" "$@" &
+    PID=$!
+    for i in $(seq 1 20); do
+        sleep 0.5
+        if already_up; then
+            wait "$PID" 2>/dev/null
+            exit 0
+        fi
+        if ! kill -0 "$PID" 2>/dev/null; then
+            break
+        fi
+    done
+done
+exit 1
 EOF
 chmod +x "$SDK_PATH/bin/simulator"
 ```
@@ -174,6 +194,13 @@ Code invokes `bin/simulator` on every Ctrl+F5, so that killed a
 perfectly-working instance every single build, causing constant "unable to
 connect" errors. Checking port 1234 first and only launching if nothing's
 there fixed it. **Do not revert this to kill-first.**
+
+**Why the retry loop:** the AppImage's FUSE mount occasionally fails on the
+first attempt with `Cannot mount AppImage, please check your FUSE setup`,
+even when FUSE itself is completely fine (a transient mount race, not a real
+system problem — confirmed by immediately retrying and having it work).
+Retrying a few times before giving up absorbs this instead of surfacing it
+as a hard failure.
 
 **Why `NO_AT_BRIDGE=1`:** without it, the simulator crashes ~25-30 seconds
 after launch with an `atk-bridge` warning followed by exit — a known
@@ -187,14 +214,16 @@ For when the simulator ever gets stuck anyway, add this to `~/.bashrc`:
 ciq-sim() {
     pkill -9 -f "AppRun.wrapped" 2>/dev/null
     sleep 1
-    NO_AT_BRIDGE=1 nohup ~/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage >/tmp/ciq-simulator.log 2>&1 &
-    disown
-    sleep 2
-    if pgrep -f "AppRun.wrapped" >/dev/null; then
-        echo "Simulator running."
-    else
-        echo "Failed to start. Check /tmp/ciq-simulator.log"
-    fi
+    for attempt in 1 2 3; do
+        NO_AT_BRIDGE=1 nohup ~/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage >/tmp/ciq-simulator.log 2>&1 &
+        disown
+        sleep 2
+        if pgrep -f "AppRun.wrapped" >/dev/null; then
+            echo "Simulator running. Leave this window/process alone and go back to VS Code."
+            return 0
+        fi
+    done
+    echo "Failed to start after 3 attempts. Check /tmp/ciq-simulator.log"
 }
 ```
 
@@ -223,7 +252,39 @@ img.resize((56, 56), Image.LANCZOS).save('resources/drawables/launcher_icon.png'
 
 ---
 
-## 7. Actually building and running
+## 7. Watch face architecture
+
+The dial is composed from independent pieces, not one big draw function.
+Monkey C has **no `interface` keyword** (verified by actually compiling one —
+the parser rejects it outright), so the contract is a plain base class:
+
+- `source/components/WatchFaceElement.mc` — base class with one method,
+  `draw(dc)`. Every dial element overrides it.
+- `source/components/DialGeometry.mc` — shared center-point/radius math so
+  every element agrees on the same geometry instead of recomputing it.
+- `source/components/HourMarkers.mc` — Roman numerals at 12/6, baton markers
+  elsewhere.
+- `source/components/ClockHands.mc` — hour/minute hands, drawn as solid
+  filled polygons rather than bare lines.
+- `source/components/DateComplication.mc` — day/date window at the 3 o'clock
+  mark. Sizes itself from `dc.getTextDimensions()` rather than a hardcoded
+  box size, so the border always exactly wraps the text regardless of string
+  length or font metrics.
+- `source/components/TemperatureComplication.mc` — the subtle gray
+  temperature readout.
+- `source/smartAndCleverBackground.mc` — no drawing logic of its own
+  anymore. Just clears the screen and loops `draw()` over an array of the
+  elements above.
+
+**To add a new complication:** write one new class extending
+`WatchFaceElement` in `source/components/`, add it to the `elements` array in
+`smartAndCleverBackground.mc`. Nothing else needs to change — new files under
+`source/components/` are picked up automatically, no jungle file edits
+needed.
+
+---
+
+## 8. Actually building and running
 
 1. Open this project folder in VS Code.
 2. Click into a `.mc` file (e.g. `source/smartAndCleverView.mc`) so it's the
@@ -245,3 +306,4 @@ img.resize((56, 56), Image.LANCZOS).save('resources/drawables/launcher_icon.png'
 | SDK Manager or Simulator GUI opens and does nothing | That's Garmin's broken official binary — use the CLI/AppImage workflow above, don't try to fix the official installer directly. |
 | Build succeeds but nothing happens after | Check whether the simulator is actually running: `pgrep -f AppRun.wrapped`. If not, see the "unable to connect" row above. |
 | Launcher icon size warning during build | See section 6 — resize `launcher_icon.png` to 56×56. |
+| `ciq-sim` prints "Cannot mount AppImage, please check your FUSE setup" | Transient FUSE mount race, not an actual FUSE problem — `ciq-sim` and the VS Code wrapper both retry 3 times automatically. If it still fails after that, check `/tmp/ciq-simulator.log` for a different error. |
