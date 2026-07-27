@@ -56,20 +56,58 @@ SDK_PATH=$(cat ~/.Garmin/ConnectIQ/current-sdk.cfg)
 mv "$SDK_PATH/bin/simulator" "$SDK_PATH/bin/simulator.broken" 2>/dev/null || true
 cat > "$SDK_PATH/bin/simulator" <<'WRAPPER'
 #!/bin/bash
+# VS Code's extension host (see note below) can exec this with PATH
+# completely empty, which breaks the `timeout`/`bash` lookups inside
+# already_up() below (making it wrongly think nothing's running) and
+# fusermount resolution for the AppImage's own FUSE mount. Guarantee the
+# standard system dirs are present regardless of what the caller passed.
+export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 # Reuse an already-running simulator instead of killing/restarting it.
+# (Used to read the first 20 bytes of a probe connection and grep for
+# "garmin device" - but that text starts at byte offset 28 in the real
+# handshake, after a fixed binary header, so it could NEVER match. It went
+# unnoticed because run-sim.sh's own separate port check normally prevents
+# this function from running at all when something's already listening -
+# but VS Code's Monkey C extension calls this wrapper directly with no such
+# pre-check, so every F5 hit this bug and forced a redundant relaunch
+# attempt against an already-healthy simulator. A plain port check is both
+# simpler and immune to any future change in the handshake's exact bytes.)
 already_up() {
-    timeout 1 bash -c 'exec 3<>/dev/tcp/127.0.0.1/1234 && head -c 20 <&3' 2>/dev/null | grep -q "garmin device"
+    ss -tln 2>/dev/null | grep -q ':1234 '
 }
 if already_up; then
     exit 0
 fi
 
 export NO_AT_BRIDGE=1   # avoids a GTK accessibility-bridge crash under Wayland
+
+# VS Code's Monkey C extension launches this wrapper directly from the
+# extension host process (not a terminal), and when VS Code itself was
+# started from a desktop/dock icon rather than a shell, that process has
+# NO DISPLAY/WAYLAND_DISPLAY at all (confirmed via /proc/<pid>/environ) -
+# the GTK-based AppImage then crash-loops trying to open its window
+# ("failed to create GtkMessageDialog") and never binds port 1234, so VS
+# Code times out after 40s with "Unable to connect to simulator." Backfill
+# from the systemd --user session (which does have them) if missing.
+: "${XDG_RUNTIME_DIR:=/run/user/$(id -u)}"
+export XDG_RUNTIME_DIR
+if [ -z "$DISPLAY" ] || [ -z "$WAYLAND_DISPLAY" ] || [ -z "$XAUTHORITY" ]; then
+    # systemctl --user itself needs XDG_RUNTIME_DIR to reach the bus, which
+    # is why that's backfilled unconditionally above first. XAUTHORITY is
+    # required too - this session's XWayland auth cookie lives in a
+    # Mutter-managed file under XDG_RUNTIME_DIR, not the classic
+    # ~/.Xauthority, so without it X11 clients get "Authorization required,
+    # but no authorization protocol specified" even with DISPLAY set right.
+    eval "$(systemctl --user show-environment 2>/dev/null | grep -E '^(DISPLAY|WAYLAND_DISPLAY|XAUTHORITY)=')"
+    export DISPLAY WAYLAND_DISPLAY XAUTHORITY
+fi
+
 APPIMAGE="$HOME/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage"
 
-# AppImage's FUSE mount occasionally races and fails on first try
-# ("Cannot mount AppImage, please check your FUSE setup") even though FUSE
-# itself is fine - retry a couple of times before giving up.
+# Also retry a couple of times in case the FUSE mount itself ever races
+# ("Cannot mount AppImage, please check your FUSE setup") - separate from
+# the DISPLAY issue above, this one really is an occasional race.
 for attempt in 1 2 3; do
     "$APPIMAGE" "$@" &
     PID=$!
@@ -101,6 +139,8 @@ Description=Connect IQ Simulator (community AppImage build, kept alive persisten
 [Service]
 ExecStart=%h/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage
 Environment=NO_AT_BRIDGE=1
+Environment=DISPLAY=:0
+Environment=WAYLAND_DISPLAY=wayland-0
 Restart=always
 RestartSec=2
 StartLimitIntervalSec=60
