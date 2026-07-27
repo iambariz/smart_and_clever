@@ -4,8 +4,11 @@ import Toybox.System;
 import Toybox.Math;
 
 class HourHand extends WatchFaceElement {
+    var style as HandStyle;
+
     function initialize(config as WatchFaceConfig) {
         WatchFaceElement.initialize(config.hourHandDisplay);
+        style = config.handStyle;
     }
 
     function draw(dc as Dc) as Void {
@@ -20,6 +23,6 @@ class HourHand extends WatchFaceElement {
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
 
         var hourAngle = ((hours % 12) * 30 + minutes * 0.5 - 90) * Math.PI / 180.0;
-        HandRenderer.drawTaperedHand(dc, centerX, centerY, hourAngle, radius * 0.5, 6);
+        HandRenderer.drawHand(dc, centerX, centerY, hourAngle, radius * 0.5, style, 6);
     }
 }

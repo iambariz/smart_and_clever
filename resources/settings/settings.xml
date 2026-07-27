@@ -42,6 +42,13 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.HandStyle" title="@Strings.HandStyleTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.HandStyleLight</listEntry>
+            <listEntry value="1">@Strings.HandStyleDauphine</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.ShowDateComplication" title="@Strings.ShowDateComplicationTitle">
         <settingConfig type="boolean" />
     </setting>

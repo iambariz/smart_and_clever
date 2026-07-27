@@ -21,6 +21,7 @@ class Background extends WatchUi.Drawable {
             displayStyleFromBoolean(app.getProperty("ShowHourMarkers") as Boolean),
             displayStyleFromBoolean(app.getProperty("ShowHourHand") as Boolean),
             displayStyleFromBoolean(app.getProperty("ShowMinuteHand") as Boolean),
+            handStyleFromNumber(app.getProperty("HandStyle") as Number),
             displayStyleFromBoolean(app.getProperty("ShowDateComplication") as Boolean),
             displayStyleFromBoolean(app.getProperty("ShowDayOfWeek") as Boolean),
             displayStyleFromBoolean(app.getProperty("ShowDayNumber") as Boolean),

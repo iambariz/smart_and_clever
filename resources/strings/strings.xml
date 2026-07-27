@@ -9,6 +9,7 @@
     <string id="ShowHourMarkersTitle">Show Hour Markers</string>
     <string id="ShowHourHandTitle">Show Hour Hand</string>
     <string id="ShowMinuteHandTitle">Show Minute Hand</string>
+    <string id="HandStyleTitle">Hand Style</string>
     <string id="ShowDateComplicationTitle">Show Day/Date</string>
     <string id="ShowDayOfWeekTitle">Show Day of Week</string>
     <string id="ShowDayNumberTitle">Show Day Number</string>
@@ -31,5 +32,8 @@
     <string id="PositionRight">Right</string>
     <string id="PositionBottom">Bottom</string>
     <string id="PositionLeft">Left</string>
+
+    <string id="HandStyleLight">Light</string>
+    <string id="HandStyleDauphine">Dauphine</string>
 
 </strings>

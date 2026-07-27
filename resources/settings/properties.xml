@@ -8,6 +8,7 @@
     <property id="ShowHourMarkers" type="boolean">true</property>
     <property id="ShowHourHand" type="boolean">true</property>
     <property id="ShowMinuteHand" type="boolean">true</property>
+    <property id="HandStyle" type="number">0</property>
     <property id="ShowDateComplication" type="boolean">true</property>
     <property id="ShowDayOfWeek" type="boolean">true</property>
     <property id="ShowDayNumber" type="boolean">true</property>
