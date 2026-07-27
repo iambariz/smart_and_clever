@@ -3,7 +3,8 @@ import Toybox.Lang;
 import Toybox.Math;
 
 // Hour markers, styled per WatchFaceConfig.numeralStyle: Roman numerals at
-// every hour, Arabic numbers at every hour, or plain batons (None).
+// 12/3/6/9 only (classic dress-watch look, batons elsewhere), Arabic
+// numbers at every hour, or plain batons everywhere (None).
 class HourMarkers extends WatchFaceElement {
     var style as NumeralStyle;
 
@@ -32,12 +33,12 @@ class HourMarkers extends WatchFaceElement {
         for (var i = 0; i < 12; i++) {
             var angle = (i * 30 - 90) * Math.PI / 180.0;
 
-            if (style == NUMERAL_STYLE_NONE) {
-                drawBaton(dc, centerX, centerY, radius, angle);
-            } else if (style == NUMERAL_STYLE_ARABIC) {
-                drawNumeral(dc, centerX, centerY, radius, angle, ARABIC_NUMERALS[i]);
+            if (style == NUMERAL_STYLE_ARABIC) {
+                drawNumeral(dc, centerX, centerY, radius, angle, ARABIC_NUMERALS[i], Graphics.FONT_XTINY);
+            } else if (style == NUMERAL_STYLE_ROMAN && (i == 0 || i == 3 || i == 6 || i == 9)) {
+                drawNumeral(dc, centerX, centerY, radius, angle, ROMAN_NUMERALS[i], Graphics.FONT_SMALL);
             } else {
-                drawNumeral(dc, centerX, centerY, radius, angle, ROMAN_NUMERALS[i]);
+                drawBaton(dc, centerX, centerY, radius, angle);
             }
         }
     }
@@ -51,10 +52,10 @@ class HourMarkers extends WatchFaceElement {
         dc.drawLine(startX, startY, endX, endY);
     }
 
-    function drawNumeral(dc as Dc, centerX as Number, centerY as Number, radius as Number, angle as Float, text as String) as Void {
+    function drawNumeral(dc as Dc, centerX as Number, centerY as Number, radius as Number, angle as Float, text as String, font as Graphics.FontDefinition) as Void {
         var textX = centerX + (radius - 20) * Math.cos(angle);
         var textY = centerY + (radius - 20) * Math.sin(angle);
-        var textHeight = dc.getTextDimensions(text, Graphics.FONT_XTINY)[1];
-        dc.drawText(textX, textY - textHeight / 2, Graphics.FONT_XTINY, text, Graphics.TEXT_JUSTIFY_CENTER);
+        var textHeight = dc.getTextDimensions(text, font)[1];
+        dc.drawText(textX, textY - textHeight / 2, font, text, Graphics.TEXT_JUSTIFY_CENTER);
     }
 }

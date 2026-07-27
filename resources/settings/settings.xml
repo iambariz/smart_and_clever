@@ -46,6 +46,7 @@
         <settingConfig type="list">
             <listEntry value="0">@Strings.HandStyleLight</listEntry>
             <listEntry value="1">@Strings.HandStyleDauphine</listEntry>
+            <listEntry value="2">@Strings.HandStyleDauphineFlat</listEntry>
         </settingConfig>
     </setting>
 

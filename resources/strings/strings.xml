@@ -35,5 +35,6 @@
 
     <string id="HandStyleLight">Light</string>
     <string id="HandStyleDauphine">Dauphine</string>
+    <string id="HandStyleDauphineFlat">Dauphine (Flat)</string>
 
 </strings>
