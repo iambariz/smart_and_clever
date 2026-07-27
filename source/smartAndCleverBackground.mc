@@ -29,12 +29,15 @@ class Background extends WatchUi.Drawable {
             positionFromNumber(app.getProperty("TemperaturePosition") as Number)
         );
 
+        // Draw order is z-order: later elements render on top of earlier
+        // ones. Hands go last so they're always on top, never hidden behind
+        // the date box or temperature text as they sweep past.
         elements = [
             new HourMarkers(config),
-            new HourHand(config),
-            new MinuteHand(config),
             new DateComplication(config),
-            new TemperatureComplication(config)
+            new TemperatureComplication(config),
+            new HourHand(config),
+            new MinuteHand(config)
         ] as Array<WatchFaceElement>;
     }
 
