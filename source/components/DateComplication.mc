@@ -38,7 +38,7 @@ class DateComplication extends WatchFaceElement {
         var boxWidth = textWidth + paddingX * 2;
         var boxHeight = textHeight + paddingY * 2;
 
-        var boxCenterX = centerX + radius * 0.55;
+        var boxCenterX = centerX + radius * 0.5;
         var boxCenterY = centerY;
 
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);

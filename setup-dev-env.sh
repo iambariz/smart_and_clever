@@ -31,11 +31,20 @@ openssl pkcs8 -topk8 -inform PEM -outform DER \
 
 # 5. Working Simulator AppImage (Garmin's bundled one is broken, see note above)
 mkdir -p ~/.Garmin/ConnectIQ/AppImages
-SDK_VERSION=$(basename "$(cat ~/.Garmin/ConnectIQ/current-sdk.cfg)")
+CIQ_VERSION=$(basename "$(cat ~/.Garmin/ConnectIQ/current-sdk.cfg)" | grep -oP '^connectiq-sdk-lin-\K[0-9]+\.[0-9]+\.[0-9]+')
+ASSET_NAME=$(curl -s https://api.github.com/repos/pcolby/connectiq-sdk-manager/releases/tags/v0.6.10 \
+  | grep -oP "\"name\": \"\KConnect_IQ_Simulator-${CIQ_VERSION}\+[0-9]+-x86_64\.AppImage(?=\")")
+if [ -z "$ASSET_NAME" ]; then
+  echo "Could not find a Simulator AppImage matching Connect IQ version $CIQ_VERSION."
+  echo "Check https://github.com/pcolby/connectiq-sdk-manager/releases for the right asset."
+  exit 1
+fi
 curl -Ls -o ~/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage \
-  "https://github.com/pcolby/connectiq-sdk-manager/releases/download/v0.6.10/Connect_IQ_Simulator-${SDK_VERSION#connectiq-sdk-lin-}-x86_64.AppImage"
-# ^ if this 404s, check https://github.com/pcolby/connectiq-sdk-manager/releases
-#   for the AppImage matching your installed SDK version and adjust the URL.
+  "https://github.com/pcolby/connectiq-sdk-manager/releases/download/v0.6.10/${ASSET_NAME}"
+file ~/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage | grep -q ELF || {
+  echo "Download failed - AppImage is not a valid ELF binary. Check the URL/asset name above."
+  exit 1
+}
 chmod +x ~/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage
 
 # 6. Replace the SDK's broken `simulator` binary with a wrapper around the working
