@@ -12,6 +12,8 @@ module HandRenderer {
             var width = baseWidth + 4;
             var tipWidth = (width * 0.35 * 0.4).toNumber();
             drawFacetedHand(dc, centerX, centerY, angle, length, width, tipWidth);
+        } else if (style == HAND_STYLE_RECTANGLE) {
+            drawRectangleHand(dc, centerX, centerY, angle, length, baseWidth + 4);
         } else {
             drawTaperedHand(dc, centerX, centerY, angle, length, baseWidth);
         }
@@ -30,6 +32,23 @@ module HandRenderer {
             [centerX + offsetX, centerY + offsetY],
             [centerX - offsetX, centerY - offsetY],
             [tipX, tipY]
+        ]);
+    }
+
+    // Rectangle: a plain constant-width bar, no taper at all.
+    function drawRectangleHand(dc as Dc, centerX as Number, centerY as Number, angle as Float, length as Float, width as Number) as Void {
+        var tipX = centerX + length * Math.cos(angle);
+        var tipY = centerY + length * Math.sin(angle);
+
+        var perpAngle = angle + Math.PI / 2.0;
+        var offsetX = (width / 2.0) * Math.cos(perpAngle);
+        var offsetY = (width / 2.0) * Math.sin(perpAngle);
+
+        dc.fillPolygon([
+            [centerX + offsetX, centerY + offsetY],
+            [tipX + offsetX, tipY + offsetY],
+            [tipX - offsetX, tipY - offsetY],
+            [centerX - offsetX, centerY - offsetY]
         ]);
     }
 

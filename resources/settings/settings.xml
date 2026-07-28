@@ -47,6 +47,7 @@
             <listEntry value="0">@Strings.HandStyleLight</listEntry>
             <listEntry value="1">@Strings.HandStyleDauphine</listEntry>
             <listEntry value="2">@Strings.HandStyleDauphineFlat</listEntry>
+            <listEntry value="3">@Strings.HandStyleRectangle</listEntry>
         </settingConfig>
     </setting>
 
