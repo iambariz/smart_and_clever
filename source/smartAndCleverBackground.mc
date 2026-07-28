@@ -1,4 +1,5 @@
 import Toybox.Application;
+import Toybox.Application.Properties;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
@@ -15,7 +16,7 @@ class Background extends WatchUi.Drawable {
     }
 
     function draw(dc as Dc) as Void {
-        dc.setColor(getApp().getProperty("BackgroundColor") as Number, Graphics.COLOR_BLACK);
+        dc.setColor(Properties.getValue("BackgroundColor") as Number, Graphics.COLOR_BLACK);
         dc.clear();
 
         var elements = buildElements();
@@ -27,19 +28,18 @@ class Background extends WatchUi.Drawable {
     }
 
     function buildElements() as Array<WatchFaceElement> {
-        var app = getApp();
         var config = new WatchFaceConfig(
-            numeralStyleFromNumber(app.getProperty("NumeralStyle") as Number),
-            displayStyleFromBoolean(app.getProperty("ShowHourMarkers") as Boolean),
-            displayStyleFromBoolean(app.getProperty("ShowHourHand") as Boolean),
-            displayStyleFromBoolean(app.getProperty("ShowMinuteHand") as Boolean),
-            handStyleFromNumber(app.getProperty("HandStyle") as Number),
-            displayStyleFromBoolean(app.getProperty("ShowDateComplication") as Boolean),
-            displayStyleFromBoolean(app.getProperty("ShowDayOfWeek") as Boolean),
-            displayStyleFromBoolean(app.getProperty("ShowDayNumber") as Boolean),
-            displayStyleFromBoolean(app.getProperty("ShowDateBorder") as Boolean),
-            displayStyleFromBoolean(app.getProperty("ShowTemperature") as Boolean),
-            positionFromNumber(app.getProperty("TemperaturePosition") as Number)
+            numeralStyleFromNumber(Properties.getValue("NumeralStyle") as Number),
+            displayStyleFromBoolean(Properties.getValue("ShowHourMarkers") as Boolean),
+            displayStyleFromBoolean(Properties.getValue("ShowHourHand") as Boolean),
+            displayStyleFromBoolean(Properties.getValue("ShowMinuteHand") as Boolean),
+            handStyleFromNumber(Properties.getValue("HandStyle") as Number),
+            displayStyleFromBoolean(Properties.getValue("ShowDateComplication") as Boolean),
+            displayStyleFromBoolean(Properties.getValue("ShowDayOfWeek") as Boolean),
+            displayStyleFromBoolean(Properties.getValue("ShowDayNumber") as Boolean),
+            displayStyleFromBoolean(Properties.getValue("ShowDateBorder") as Boolean),
+            displayStyleFromBoolean(Properties.getValue("ShowTemperature") as Boolean),
+            positionFromNumber(Properties.getValue("TemperaturePosition") as Number)
         );
 
         // Draw order is z-order: later elements render on top of earlier

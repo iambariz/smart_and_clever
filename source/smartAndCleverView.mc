@@ -1,4 +1,5 @@
 import Toybox.Application;
+import Toybox.Application.Properties;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
@@ -32,16 +33,15 @@ class smartAndCleverView extends WatchUi.WatchFace {
                 hours = hours - 12;
             }
         } else {
-            if (getApp().getProperty("UseMilitaryFormat")) {
+            if (Properties.getValue("UseMilitaryFormat")) {
                 timeFormat = "$1$$2$";
                 hours = hours.format("%02d");
             }
         }
-        var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);
 
         // Update the view
         var view = View.findDrawableById("TimeLabel") as Text;
-        view.setColor(getApp().getProperty("ForegroundColor") as Number);
+        view.setColor(Properties.getValue("ForegroundColor") as Number);
         // view.setText(timeString);
 
         // Call the parent onUpdate function to redraw the layout
