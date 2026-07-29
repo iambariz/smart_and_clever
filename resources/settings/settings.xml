@@ -51,6 +51,10 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.ShowCenterDot" title="@Strings.ShowCenterDotTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.ShowDateComplication" title="@Strings.ShowDateComplicationTitle">
         <settingConfig type="boolean" />
     </setting>

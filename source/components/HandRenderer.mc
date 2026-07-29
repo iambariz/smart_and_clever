@@ -5,17 +5,27 @@ import Toybox.Math;
 // Shared helper for drawing hour/minute hands as filled polygons - used by
 // HourHand and MinuteHand so the shape logic exists once.
 module HandRenderer {
+    // The actual base width a hand renders at for a given style - bolder
+    // presets widen the base beyond the plain baseWidth. Exposed so other
+    // elements (e.g. the center dot) can scale themselves to match.
+    function effectiveWidth(style as HandStyle, baseWidth as Number) as Number {
+        if (style == HAND_STYLE_LIGHT) {
+            return baseWidth;
+        }
+        return baseWidth + 4;
+    }
+
     function drawHand(dc as Dc, centerX as Number, centerY as Number, angle as Float, length as Float, style as HandStyle, baseWidth as Number) as Void {
+        var width = effectiveWidth(style, baseWidth);
         if (style == HAND_STYLE_DAUPHINE) {
-            drawFacetedHand(dc, centerX, centerY, angle, length, baseWidth + 4, 0);
+            drawFacetedHand(dc, centerX, centerY, angle, length, width, 0);
         } else if (style == HAND_STYLE_DAUPHINE_FLAT) {
-            var width = baseWidth + 4;
             var tipWidth = (width * 0.35 * 0.4).toNumber();
             drawFacetedHand(dc, centerX, centerY, angle, length, width, tipWidth);
         } else if (style == HAND_STYLE_RECTANGLE) {
-            drawRectangleHand(dc, centerX, centerY, angle, length, baseWidth + 4);
+            drawRectangleHand(dc, centerX, centerY, angle, length, width);
         } else {
-            drawTaperedHand(dc, centerX, centerY, angle, length, baseWidth);
+            drawTaperedHand(dc, centerX, centerY, angle, length, width);
         }
     }
 

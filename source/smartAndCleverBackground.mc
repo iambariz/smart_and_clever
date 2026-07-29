@@ -34,6 +34,7 @@ class Background extends WatchUi.Drawable {
             displayStyleFromBoolean(Properties.getValue("ShowHourHand") as Boolean),
             displayStyleFromBoolean(Properties.getValue("ShowMinuteHand") as Boolean),
             handStyleFromNumber(Properties.getValue("HandStyle") as Number),
+            displayStyleFromBoolean(Properties.getValue("ShowCenterDot") as Boolean),
             displayStyleFromBoolean(Properties.getValue("ShowDateComplication") as Boolean),
             displayStyleFromBoolean(Properties.getValue("ShowDayOfWeek") as Boolean),
             displayStyleFromBoolean(Properties.getValue("ShowDayNumber") as Boolean),
@@ -43,14 +44,16 @@ class Background extends WatchUi.Drawable {
         );
 
         // Draw order is z-order: later elements render on top of earlier
-        // ones. Hands go last so they're always on top, never hidden behind
-        // the date box or temperature text as they sweep past.
+        // ones. Hands go before the center dot (which caps their bases,
+        // like a real watch's pivot cover) and after everything else so
+        // they're never hidden behind the date box or temperature text.
         return [
             new HourMarkers(config),
             new DateComplication(config),
             new TemperatureComplication(config),
             new HourHand(config),
-            new MinuteHand(config)
+            new MinuteHand(config),
+            new CenterDot(config)
         ] as Array<WatchFaceElement>;
     }
 }
