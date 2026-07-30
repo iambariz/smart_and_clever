@@ -11,11 +11,15 @@ class TemperatureComplication extends WatchFaceElement {
     }
 
     function draw(dc as Dc) as Void {
+        var conditions = Weather.getCurrentConditions();
+        if (conditions == null || conditions.temperature == null) {
+            return;
+        }
+
         var radius = DialGeometry.radius(dc);
         var point = DialGeometry.pointForPosition(dc, position, radius * 0.45);
 
-        var temp = Weather.getCurrentConditions().temperature;
-        var tempStr = temp.format("%.1f") + "°C";
+        var tempStr = conditions.temperature.format("%.1f") + "°C";
         var textHeight = dc.getTextDimensions(tempStr, Graphics.FONT_XTINY)[1];
 
         dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);

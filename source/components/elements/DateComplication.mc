@@ -52,14 +52,6 @@ class DateComplication extends WatchFaceElement {
 
     function buildDateString() as String {
         var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
-
-        if (showDayOfWeek && showDayNumber) {
-            return Lang.format("$1$ $2$", [today.day_of_week, today.day]);
-        } else if (showDayOfWeek) {
-            return today.day_of_week;
-        } else if (showDayNumber) {
-            return today.day.format("%d");
-        }
-        return "";
+        return formatDateComplicationString(today.day_of_week, today.day, showDayOfWeek, showDayNumber);
     }
 }
