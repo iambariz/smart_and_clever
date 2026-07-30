@@ -5,10 +5,12 @@ import Toybox.Lang;
 // subtle, drawn on top of the hands (see Background's element order).
 class CenterDot extends WatchFaceElement {
     var handStyle as HandStyle;
+    var color as Number;
 
     function initialize(config as WatchFaceConfig) {
         WatchFaceElement.initialize(config.centerDotDisplay);
         handStyle = config.handStyle;
+        color = config.foregroundColor;
     }
 
     function draw(dc as Dc) as Void {
@@ -22,7 +24,7 @@ class CenterDot extends WatchFaceElement {
         var handWidth = HandRenderer.effectiveWidth(handStyle, 6);
         var radius = handWidth / 2 + 1;
 
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
         dc.fillCircle(centerX, centerY, radius);
     }
 }

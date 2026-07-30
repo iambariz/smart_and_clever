@@ -7,6 +7,7 @@ import Toybox.Math;
 // numbers at every hour, or plain batons everywhere (None).
 class HourMarkers extends WatchFaceElement {
     var style as NumeralStyle;
+    var color as Number;
 
     const ROMAN_NUMERALS = [
         "XII", "I", "II", "III", "IV", "V",
@@ -21,6 +22,7 @@ class HourMarkers extends WatchFaceElement {
     function initialize(config as WatchFaceConfig) {
         WatchFaceElement.initialize(config.hourMarkersDisplay);
         style = config.numeralStyle;
+        color = config.foregroundColor;
     }
 
     function draw(dc as Dc) as Void {
@@ -28,10 +30,10 @@ class HourMarkers extends WatchFaceElement {
         var centerY = DialGeometry.centerY(dc);
         var radius = DialGeometry.radius(dc);
 
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
 
         for (var i = 0; i < 12; i++) {
-            var angle = (i * 30 - 90) * Math.PI / 180.0;
+            var angle = DialGeometry.clockAngle(i * 30);
 
             if (style == NUMERAL_STYLE_ARABIC) {
                 drawNumeral(dc, centerX, centerY, radius, angle, ARABIC_NUMERALS[i], Graphics.FONT_XTINY);

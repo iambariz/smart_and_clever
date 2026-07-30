@@ -1,7 +1,15 @@
 import Toybox.Graphics;
 import Toybox.Lang;
+import Toybox.Math;
 
 module DialGeometry {
+    // Converts a clock-face degree value (0 = 12 o'clock, clockwise) to the
+    // radians dc drawing calls expect (0 = 3 o'clock). Shared by anything
+    // that places itself around the dial by hour/minute angle.
+    function clockAngle(degrees as Numeric) as Float {
+        return (degrees - 90) * Math.PI / 180.0;
+    }
+
     function centerX(dc as Dc) as Number {
         return dc.getWidth() / 2;
     }

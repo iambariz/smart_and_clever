@@ -5,6 +5,7 @@ import Toybox.Lang;
 // elements just read values back out of it.
 class WatchFaceConfig {
     var numeralStyle as NumeralStyle;
+    var foregroundColor as Number;
     var hourMarkersDisplay as DisplayStyle;
     var hourHandDisplay as DisplayStyle;
     var minuteHandDisplay as DisplayStyle;
@@ -19,6 +20,7 @@ class WatchFaceConfig {
 
     function initialize(
         numeralStyle as NumeralStyle,
+        foregroundColor as Number,
         hourMarkersDisplay as DisplayStyle,
         hourHandDisplay as DisplayStyle,
         minuteHandDisplay as DisplayStyle,
@@ -32,6 +34,7 @@ class WatchFaceConfig {
         temperaturePosition as Position
     ) {
         self.numeralStyle = numeralStyle;
+        self.foregroundColor = foregroundColor;
         self.hourMarkersDisplay = hourMarkersDisplay;
         self.hourHandDisplay = hourHandDisplay;
         self.minuteHandDisplay = minuteHandDisplay;

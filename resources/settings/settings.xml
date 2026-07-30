@@ -18,10 +18,6 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.UseMilitaryFormat" title="@Strings.MilitaryFormatTitle">
-        <settingConfig type="boolean" />
-    </setting>
-
     <setting propertyKey="@Properties.NumeralStyle" title="@Strings.NumeralStyleTitle">
         <settingConfig type="list">
             <listEntry value="0">@Strings.NumeralsRoman</listEntry>

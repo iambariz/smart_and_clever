@@ -5,10 +5,12 @@ import Toybox.Math;
 
 class MinuteHand extends WatchFaceElement {
     var style as HandStyle;
+    var color as Number;
 
     function initialize(config as WatchFaceConfig) {
         WatchFaceElement.initialize(config.minuteHandDisplay);
         style = config.handStyle;
+        color = config.foregroundColor;
     }
 
     function draw(dc as Dc) as Void {
@@ -19,9 +21,9 @@ class MinuteHand extends WatchFaceElement {
         var clockTime = System.getClockTime();
         var minutes = clockTime.min;
 
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
 
-        var minuteAngle = (minutes * 6 - 90) * Math.PI / 180.0;
+        var minuteAngle = DialGeometry.clockAngle(minutes * 6);
         HandRenderer.drawHand(dc, centerX, centerY, minuteAngle, radius * 0.75, style, 4);
     }
 }
