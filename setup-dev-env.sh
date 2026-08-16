@@ -126,15 +126,20 @@ exit 1
 WRAPPER
 chmod +x "$SDK_PATH/bin/simulator"
 
-# 7. Run the simulator as a systemd --user service that restarts itself
-#    automatically. This is the actual fix for "unable to connect to
-#    simulator" recurring: launching it only on-demand from VS Code's build
-#    step means if it ever dies between builds, nothing brings it back until
-#    the next Ctrl+F5 fails. A supervised service is always there instead.
+# 7. Register the simulator as a systemd --user service that restarts
+#    itself if it dies while running - fixes "unable to connect to
+#    simulator" recurring, since launching it only on-demand from VS Code's
+#    build step means nothing brings it back if it dies between builds.
+#    IMPORTANT: do NOT `enable` this (only `daemon-reload` + start it when
+#    you actually want it running). Enabling makes it auto-launch on every
+#    login/boot, which is unwanted background weight most of the time -
+#    that mistake made it noticeably slow down system startup. Start it
+#    on-demand instead, with `ciq-sim` (defined below) or `systemctl --user
+#    start ciq-simulator.service`.
 mkdir -p ~/.config/systemd/user
 cat > ~/.config/systemd/user/ciq-simulator.service <<'EOF'
 [Unit]
-Description=Connect IQ Simulator (community AppImage build, kept alive persistently)
+Description=Connect IQ Simulator (community AppImage build, restarts itself if it dies while running - not enabled at boot, start on-demand)
 
 [Service]
 ExecStart=%h/.Garmin/ConnectIQ/AppImages/Connect_IQ_Simulator.AppImage
@@ -145,12 +150,8 @@ Restart=always
 RestartSec=2
 StartLimitIntervalSec=60
 StartLimitBurst=10
-
-[Install]
-WantedBy=default.target
 EOF
 systemctl --user daemon-reload
-systemctl --user enable --now ciq-simulator.service
 
 # 8. A manual fallback you can run yourself anytime, from any terminal, to
 #    force a fresh restart of the service.
@@ -174,5 +175,5 @@ fi
 
 echo "Done. Open this project folder in VS Code, make sure only garmin.monkey-c"
 echo "extension is installed (not ghisguth.monkey-c), and press Ctrl+F5."
-echo "The simulator runs as a systemd service and restarts itself automatically."
-echo "If it ever misbehaves anyway, run 'ciq-sim' in a new terminal."
+echo "The simulator wrapper launches it on demand - nothing runs at boot/login."
+echo "If it ever gets stuck, run 'ciq-sim' in a new terminal to (re)start it."
