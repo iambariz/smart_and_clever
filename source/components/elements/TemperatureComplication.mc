@@ -2,12 +2,9 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.Weather;
 
-class TemperatureComplication extends WatchFaceElement {
-    var position as Position;
-
+class TemperatureComplication extends PositionedComplication {
     function initialize(config as WatchFaceConfig) {
-        WatchFaceElement.initialize(config.temperatureDisplay);
-        position = config.temperaturePosition;
+        PositionedComplication.initialize(config.temperatureDisplay, config.temperaturePosition);
     }
 
     function draw(dc as Dc) as Void {

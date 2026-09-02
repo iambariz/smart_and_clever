@@ -46,8 +46,18 @@ class Background extends WatchUi.Drawable {
             displayStyleFromBoolean(Properties.getValue("ShowBattery") as Boolean),
             positionFromNumber(Properties.getValue("BatteryPosition") as Number),
             displayStyleFromBoolean(Properties.getValue("ShowSteps") as Boolean),
-            positionFromNumber(Properties.getValue("StepsPosition") as Number)
+            positionFromNumber(Properties.getValue("StepsPosition") as Number),
+            displayStyleFromBoolean(Properties.getValue("ShowHeartRate") as Boolean),
+            positionFromNumber(Properties.getValue("HeartRatePosition") as Number)
         );
+
+        var positionedComplications = [
+            new TemperatureComplication(config),
+            new BatteryComplication(config),
+            new StepsComplication(config),
+            new HeartRateComplication(config)
+        ] as Array<PositionedComplication>;
+        resolvePositionConflicts(positionedComplications);
 
         // Draw order is z-order: later elements render on top of earlier
         // ones. Hands go before the center dot (which caps their bases,
@@ -56,13 +66,29 @@ class Background extends WatchUi.Drawable {
         return [
             new HourMarkers(config),
             new DateComplication(config),
-            new TemperatureComplication(config),
-            new BatteryComplication(config),
-            new StepsComplication(config),
+            positionedComplications[0],
+            positionedComplications[1],
+            positionedComplications[2],
+            positionedComplications[3],
             new HourHand(config),
             new MinuteHand(config),
             new SecondHand(config),
             new CenterDot(config)
         ] as Array<WatchFaceElement>;
+    }
+
+    function resolvePositionConflicts(complications as Array<PositionedComplication>) as Void {
+        var claimedPositions = [] as Array<Position>;
+        for (var i = 0; i < complications.size(); i++) {
+            var complication = complications[i];
+            if (!complication.isVisible()) {
+                continue;
+            }
+            if (claimedPositions.indexOf(complication.position) >= 0) {
+                complication.suppress();
+            } else {
+                claimedPositions.add(complication.position);
+            }
+        }
     }
 }

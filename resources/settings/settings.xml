@@ -110,4 +110,17 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.ShowHeartRate" title="@Strings.ShowHeartRateTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.HeartRatePosition" title="@Strings.HeartRatePositionTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.PositionTop</listEntry>
+            <listEntry value="1">@Strings.PositionRight</listEntry>
+            <listEntry value="2">@Strings.PositionBottom</listEntry>
+            <listEntry value="3">@Strings.PositionLeft</listEntry>
+        </settingConfig>
+    </setting>
+
 </settings>

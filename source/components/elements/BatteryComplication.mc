@@ -2,12 +2,9 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
 
-class BatteryComplication extends WatchFaceElement {
-    var position as Position;
-
+class BatteryComplication extends PositionedComplication {
     function initialize(config as WatchFaceConfig) {
-        WatchFaceElement.initialize(config.batteryDisplay);
-        position = config.batteryPosition;
+        PositionedComplication.initialize(config.batteryDisplay, config.batteryPosition);
     }
 
     function draw(dc as Dc) as Void {

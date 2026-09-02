@@ -22,6 +22,8 @@ class WatchFaceConfig {
     var batteryPosition as Position;
     var stepsDisplay as DisplayStyle;
     var stepsPosition as Position;
+    var heartRateDisplay as DisplayStyle;
+    var heartRatePosition as Position;
 
     function initialize(
         numeralStyle as NumeralStyle,
@@ -41,7 +43,9 @@ class WatchFaceConfig {
         batteryDisplay as DisplayStyle,
         batteryPosition as Position,
         stepsDisplay as DisplayStyle,
-        stepsPosition as Position
+        stepsPosition as Position,
+        heartRateDisplay as DisplayStyle,
+        heartRatePosition as Position
     ) {
         self.numeralStyle = numeralStyle;
         self.foregroundColor = foregroundColor;
@@ -61,5 +65,7 @@ class WatchFaceConfig {
         self.batteryPosition = batteryPosition;
         self.stepsDisplay = stepsDisplay;
         self.stepsPosition = stepsPosition;
+        self.heartRateDisplay = heartRateDisplay;
+        self.heartRatePosition = heartRatePosition;
     }
 }

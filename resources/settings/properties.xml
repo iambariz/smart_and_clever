@@ -20,5 +20,7 @@
     <property id="BatteryPosition" type="number">0</property>
     <property id="ShowSteps" type="boolean">true</property>
     <property id="StepsPosition" type="number">2</property>
+    <property id="ShowHeartRate" type="boolean">false</property>
+    <property id="HeartRatePosition" type="number">3</property>
 
 </properties>

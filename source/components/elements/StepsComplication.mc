@@ -2,12 +2,9 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.ActivityMonitor;
 
-class StepsComplication extends WatchFaceElement {
-    var position as Position;
-
+class StepsComplication extends PositionedComplication {
     function initialize(config as WatchFaceConfig) {
-        WatchFaceElement.initialize(config.stepsDisplay);
-        position = config.stepsPosition;
+        PositionedComplication.initialize(config.stepsDisplay, config.stepsPosition);
     }
 
     function draw(dc as Dc) as Void {
