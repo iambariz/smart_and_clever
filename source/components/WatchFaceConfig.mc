@@ -9,6 +9,7 @@ class WatchFaceConfig {
     var hourMarkersDisplay as DisplayStyle;
     var hourHandDisplay as DisplayStyle;
     var minuteHandDisplay as DisplayStyle;
+    var secondHandDisplay as DisplayStyle;
     var handStyle as HandStyle;
     var centerDotDisplay as DisplayStyle;
     var dateDisplay as DisplayStyle;
@@ -24,6 +25,7 @@ class WatchFaceConfig {
         hourMarkersDisplay as DisplayStyle,
         hourHandDisplay as DisplayStyle,
         minuteHandDisplay as DisplayStyle,
+        secondHandDisplay as DisplayStyle,
         handStyle as HandStyle,
         centerDotDisplay as DisplayStyle,
         dateDisplay as DisplayStyle,
@@ -38,6 +40,7 @@ class WatchFaceConfig {
         self.hourMarkersDisplay = hourMarkersDisplay;
         self.hourHandDisplay = hourHandDisplay;
         self.minuteHandDisplay = minuteHandDisplay;
+        self.secondHandDisplay = secondHandDisplay;
         self.handStyle = handStyle;
         self.centerDotDisplay = centerDotDisplay;
         self.dateDisplay = dateDisplay;

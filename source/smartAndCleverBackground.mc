@@ -34,6 +34,7 @@ class Background extends WatchUi.Drawable {
             displayStyleFromBoolean(Properties.getValue("ShowHourMarkers") as Boolean),
             displayStyleFromBoolean(Properties.getValue("ShowHourHand") as Boolean),
             displayStyleFromBoolean(Properties.getValue("ShowMinuteHand") as Boolean),
+            displayStyleFromBoolean(Properties.getValue("ShowSecondHand") as Boolean),
             handStyleFromNumber(Properties.getValue("HandStyle") as Number),
             displayStyleFromBoolean(Properties.getValue("ShowCenterDot") as Boolean),
             displayStyleFromBoolean(Properties.getValue("ShowDateComplication") as Boolean),
@@ -54,6 +55,7 @@ class Background extends WatchUi.Drawable {
             new TemperatureComplication(config),
             new HourHand(config),
             new MinuteHand(config),
+            new SecondHand(config),
             new CenterDot(config)
         ] as Array<WatchFaceElement>;
     }

@@ -8,6 +8,7 @@
     <string id="ShowHourMarkersTitle">Show Hour Markers</string>
     <string id="ShowHourHandTitle">Show Hour Hand</string>
     <string id="ShowMinuteHandTitle">Show Minute Hand</string>
+    <string id="ShowSecondHandTitle">Show Second Hand</string>
     <string id="HandStyleTitle">Hand Style</string>
     <string id="ShowDateComplicationTitle">Show Day/Date</string>
     <string id="ShowDayOfWeekTitle">Show Day of Week</string>

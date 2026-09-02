@@ -38,6 +38,10 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.ShowSecondHand" title="@Strings.ShowSecondHandTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.HandStyle" title="@Strings.HandStyleTitle">
         <settingConfig type="list">
             <listEntry value="0">@Strings.HandStyleLight</listEntry>
