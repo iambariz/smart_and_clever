@@ -56,6 +56,17 @@ class smartAndCleverView extends WatchUi.WatchFace {
         stopSecondsTimer();
     }
 
+    // Lets the OS keep the face on screen in Always-On mode instead of
+    // blanking/dimming on wrist-down. The OS decides how often this is
+    // called during sleep (never faster than once/second, often once a
+    // minute on AMOLED to limit burn-in) - we just draw whatever the clock
+    // says right now each time, same as a normal update. Safe to reuse the
+    // full draw here since the second-hand timer above is already stopped
+    // for sleep, so there's nothing per-second-precise to reconcile.
+    function onPartialUpdate(dc as Dc) as Void {
+        View.onUpdate(dc);
+    }
+
     // Garmin only redraws watch faces once a minute by default; a sweeping
     // second hand needs a 1Hz timer requesting updates instead. Only runs
     // while awake and enabled, since redrawing every second in always-on/
