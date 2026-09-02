@@ -42,7 +42,9 @@ class Background extends WatchUi.Drawable {
             displayStyleFromBoolean(Properties.getValue("ShowDayNumber") as Boolean),
             displayStyleFromBoolean(Properties.getValue("ShowDateBorder") as Boolean),
             displayStyleFromBoolean(Properties.getValue("ShowTemperature") as Boolean),
-            positionFromNumber(Properties.getValue("TemperaturePosition") as Number)
+            positionFromNumber(Properties.getValue("TemperaturePosition") as Number),
+            displayStyleFromBoolean(Properties.getValue("ShowBattery") as Boolean),
+            positionFromNumber(Properties.getValue("BatteryPosition") as Number)
         );
 
         // Draw order is z-order: later elements render on top of earlier
@@ -53,6 +55,7 @@ class Background extends WatchUi.Drawable {
             new HourMarkers(config),
             new DateComplication(config),
             new TemperatureComplication(config),
+            new BatteryComplication(config),
             new HourHand(config),
             new MinuteHand(config),
             new SecondHand(config),

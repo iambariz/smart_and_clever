@@ -18,6 +18,8 @@ class WatchFaceConfig {
     var dateBorderDisplay as DisplayStyle;
     var temperatureDisplay as DisplayStyle;
     var temperaturePosition as Position;
+    var batteryDisplay as DisplayStyle;
+    var batteryPosition as Position;
 
     function initialize(
         numeralStyle as NumeralStyle,
@@ -33,7 +35,9 @@ class WatchFaceConfig {
         dayNumberDisplay as DisplayStyle,
         dateBorderDisplay as DisplayStyle,
         temperatureDisplay as DisplayStyle,
-        temperaturePosition as Position
+        temperaturePosition as Position,
+        batteryDisplay as DisplayStyle,
+        batteryPosition as Position
     ) {
         self.numeralStyle = numeralStyle;
         self.foregroundColor = foregroundColor;
@@ -49,5 +53,7 @@ class WatchFaceConfig {
         self.dateBorderDisplay = dateBorderDisplay;
         self.temperatureDisplay = temperatureDisplay;
         self.temperaturePosition = temperaturePosition;
+        self.batteryDisplay = batteryDisplay;
+        self.batteryPosition = batteryPosition;
     }
 }

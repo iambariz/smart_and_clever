@@ -16,5 +16,7 @@
     <property id="ShowDateBorder" type="boolean">true</property>
     <property id="ShowTemperature" type="boolean">true</property>
     <property id="TemperaturePosition" type="number">3</property>
+    <property id="ShowBattery" type="boolean">true</property>
+    <property id="BatteryPosition" type="number">0</property>
 
 </properties>
