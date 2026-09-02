@@ -18,6 +18,8 @@
     <string id="TemperaturePositionTitle">Temperature Position</string>
     <string id="ShowBatteryTitle">Show Battery</string>
     <string id="BatteryPositionTitle">Battery Position</string>
+    <string id="ShowStepsTitle">Show Steps</string>
+    <string id="StepsPositionTitle">Steps Position</string>
 
     <string id="ColorBlack">Black</string>
     <string id="ColorDarkGray">Dark Gray</string>

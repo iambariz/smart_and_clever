@@ -20,6 +20,8 @@ class WatchFaceConfig {
     var temperaturePosition as Position;
     var batteryDisplay as DisplayStyle;
     var batteryPosition as Position;
+    var stepsDisplay as DisplayStyle;
+    var stepsPosition as Position;
 
     function initialize(
         numeralStyle as NumeralStyle,
@@ -37,7 +39,9 @@ class WatchFaceConfig {
         temperatureDisplay as DisplayStyle,
         temperaturePosition as Position,
         batteryDisplay as DisplayStyle,
-        batteryPosition as Position
+        batteryPosition as Position,
+        stepsDisplay as DisplayStyle,
+        stepsPosition as Position
     ) {
         self.numeralStyle = numeralStyle;
         self.foregroundColor = foregroundColor;
@@ -55,5 +59,7 @@ class WatchFaceConfig {
         self.temperaturePosition = temperaturePosition;
         self.batteryDisplay = batteryDisplay;
         self.batteryPosition = batteryPosition;
+        self.stepsDisplay = stepsDisplay;
+        self.stepsPosition = stepsPosition;
     }
 }

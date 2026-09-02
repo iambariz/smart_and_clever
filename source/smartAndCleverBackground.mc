@@ -44,7 +44,9 @@ class Background extends WatchUi.Drawable {
             displayStyleFromBoolean(Properties.getValue("ShowTemperature") as Boolean),
             positionFromNumber(Properties.getValue("TemperaturePosition") as Number),
             displayStyleFromBoolean(Properties.getValue("ShowBattery") as Boolean),
-            positionFromNumber(Properties.getValue("BatteryPosition") as Number)
+            positionFromNumber(Properties.getValue("BatteryPosition") as Number),
+            displayStyleFromBoolean(Properties.getValue("ShowSteps") as Boolean),
+            positionFromNumber(Properties.getValue("StepsPosition") as Number)
         );
 
         // Draw order is z-order: later elements render on top of earlier
@@ -56,6 +58,7 @@ class Background extends WatchUi.Drawable {
             new DateComplication(config),
             new TemperatureComplication(config),
             new BatteryComplication(config),
+            new StepsComplication(config),
             new HourHand(config),
             new MinuteHand(config),
             new SecondHand(config),

@@ -18,5 +18,7 @@
     <property id="TemperaturePosition" type="number">3</property>
     <property id="ShowBattery" type="boolean">true</property>
     <property id="BatteryPosition" type="number">0</property>
+    <property id="ShowSteps" type="boolean">true</property>
+    <property id="StepsPosition" type="number">2</property>
 
 </properties>
