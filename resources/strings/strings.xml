@@ -45,4 +45,11 @@
     <string id="HandStyleRectangle">Rectangle</string>
     <string id="ShowCenterDotTitle">Show Center Dot</string>
 
+    <string id="SettingsMenuTitle">Settings</string>
+    <string id="ColorsMenuTitle">Colors</string>
+    <string id="HandsMenuTitle">Numerals &amp; Hands</string>
+    <string id="DateMenuTitle">Date</string>
+    <string id="ComplicationsMenuTitle">Complications</string>
+    <string id="ValueSelected">Selected</string>
+
 </strings>

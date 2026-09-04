@@ -26,6 +26,11 @@ class smartAndCleverApp extends Application.AppBase {
         WatchUi.requestUpdate();
     }
 
+    // On-device settings menu, reachable without the Connect Mobile app.
+    function getSettingsView() as [Views] or [Views, InputDelegates] or Null {
+        return [ new SettingsMenu(), new SettingsMenuDelegate() ];
+    }
+
 }
 
 function getApp() as smartAndCleverApp {
