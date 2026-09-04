@@ -28,28 +28,29 @@ class Background extends WatchUi.Drawable {
     }
 
     function buildElements() as Array<WatchFaceElement> {
-        var config = new WatchFaceConfig(
-            numeralStyleFromNumber(Properties.getValue("NumeralStyle") as Number),
-            Properties.getValue("ForegroundColor") as Number,
-            displayStyleFromBoolean(Properties.getValue("ShowHourMarkers") as Boolean),
-            displayStyleFromBoolean(Properties.getValue("ShowHourHand") as Boolean),
-            displayStyleFromBoolean(Properties.getValue("ShowMinuteHand") as Boolean),
-            displayStyleFromBoolean(Properties.getValue("ShowSecondHand") as Boolean),
-            handStyleFromNumber(Properties.getValue("HandStyle") as Number),
-            displayStyleFromBoolean(Properties.getValue("ShowCenterDot") as Boolean),
-            displayStyleFromBoolean(Properties.getValue("ShowDateComplication") as Boolean),
-            displayStyleFromBoolean(Properties.getValue("ShowDayOfWeek") as Boolean),
-            displayStyleFromBoolean(Properties.getValue("ShowDayNumber") as Boolean),
-            displayStyleFromBoolean(Properties.getValue("ShowDateBorder") as Boolean),
-            displayStyleFromBoolean(Properties.getValue("ShowTemperature") as Boolean),
-            positionFromNumber(Properties.getValue("TemperaturePosition") as Number),
-            displayStyleFromBoolean(Properties.getValue("ShowBattery") as Boolean),
-            positionFromNumber(Properties.getValue("BatteryPosition") as Number),
-            displayStyleFromBoolean(Properties.getValue("ShowSteps") as Boolean),
-            positionFromNumber(Properties.getValue("StepsPosition") as Number),
-            displayStyleFromBoolean(Properties.getValue("ShowHeartRate") as Boolean),
-            positionFromNumber(Properties.getValue("HeartRatePosition") as Number)
-        );
+        // Set by name, not by constructor position - see WatchFaceConfig's
+        // doc comment for why: it makes a silent field swap impossible.
+        var config = new WatchFaceConfig();
+        config.numeralStyle = numeralStyleFromNumber(Properties.getValue("NumeralStyle") as Number);
+        config.foregroundColor = Properties.getValue("ForegroundColor") as Number;
+        config.hourMarkersDisplay = displayStyleFromBoolean(Properties.getValue("ShowHourMarkers") as Boolean);
+        config.hourHandDisplay = displayStyleFromBoolean(Properties.getValue("ShowHourHand") as Boolean);
+        config.minuteHandDisplay = displayStyleFromBoolean(Properties.getValue("ShowMinuteHand") as Boolean);
+        config.secondHandDisplay = displayStyleFromBoolean(Properties.getValue("ShowSecondHand") as Boolean);
+        config.handStyle = handStyleFromNumber(Properties.getValue("HandStyle") as Number);
+        config.centerDotDisplay = displayStyleFromBoolean(Properties.getValue("ShowCenterDot") as Boolean);
+        config.dateDisplay = displayStyleFromBoolean(Properties.getValue("ShowDateComplication") as Boolean);
+        config.dayOfWeekDisplay = displayStyleFromBoolean(Properties.getValue("ShowDayOfWeek") as Boolean);
+        config.dayNumberDisplay = displayStyleFromBoolean(Properties.getValue("ShowDayNumber") as Boolean);
+        config.dateBorderDisplay = displayStyleFromBoolean(Properties.getValue("ShowDateBorder") as Boolean);
+        config.temperatureDisplay = displayStyleFromBoolean(Properties.getValue("ShowTemperature") as Boolean);
+        config.temperaturePosition = positionFromNumber(Properties.getValue("TemperaturePosition") as Number);
+        config.batteryDisplay = displayStyleFromBoolean(Properties.getValue("ShowBattery") as Boolean);
+        config.batteryPosition = positionFromNumber(Properties.getValue("BatteryPosition") as Number);
+        config.stepsDisplay = displayStyleFromBoolean(Properties.getValue("ShowSteps") as Boolean);
+        config.stepsPosition = positionFromNumber(Properties.getValue("StepsPosition") as Number);
+        config.heartRateDisplay = displayStyleFromBoolean(Properties.getValue("ShowHeartRate") as Boolean);
+        config.heartRatePosition = positionFromNumber(Properties.getValue("HeartRatePosition") as Number);
 
         var positionedComplications = [
             new TemperatureComplication(config),
