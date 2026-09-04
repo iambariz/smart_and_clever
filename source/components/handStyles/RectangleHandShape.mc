@@ -21,5 +21,10 @@ class RectangleHandShape extends HandShape {
             [tipX - offsetX, tipY - offsetY],
             [centerX - offsetX, centerY - offsetY]
         ]);
+
+        // Round the tip instead of leaving the flat chisel edge a plain
+        // rectangle cuts off square - reads as a finished, capped hand
+        // rather than a bar sliced at an arbitrary length.
+        dc.fillCircle(tipX, tipY, width / 2.0);
     }
 }
