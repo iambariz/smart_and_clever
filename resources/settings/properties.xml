@@ -1,5 +1,12 @@
 <properties>
 
+    <property id="ThemePreset" type="number">0</property>
+    <!-- Internal bookkeeping only, no settings.xml entry - never shown in the
+         Connect app UI. Tracks which preset ThemePreset's value was last
+         applied for, so onSettingsChanged() can tell a real preset pick
+         apart from an unrelated settings change. -->
+    <property id="AppliedPreset" type="number">0</property>
+
     <property id="BackgroundColor" type="number">0x000000</property>
     <property id="ForegroundColor" type="number">0xFFFFFF</property>
     <property id="NumeralStyle" type="number">0</property>

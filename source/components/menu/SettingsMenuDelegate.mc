@@ -8,6 +8,12 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
 
     function onSelect(menuItem as WatchUi.MenuItem) as Void {
         var id = menuItem.getId() as String;
+
+        if (id.equals("Presets")) {
+            WatchUi.pushView(new PresetMenu(), new PresetMenuDelegate(), WatchUi.SLIDE_LEFT);
+            return;
+        }
+
         var title = titleFor(id);
         var items = itemsFor(id);
         if (title == null || items == null) {

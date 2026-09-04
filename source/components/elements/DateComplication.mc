@@ -17,7 +17,10 @@ class DateComplication extends WatchFaceElement {
         showDayOfWeek = config.dayOfWeekDisplay == DISPLAY_SHOWN;
         showDayNumber = config.dayNumberDisplay == DISPLAY_SHOWN;
         showBorder = config.dateBorderDisplay == DISPLAY_SHOWN;
-        color = config.foregroundColor;
+        // Dimmed toward the background rather than a fixed gray, so it
+        // reads as a subtle secondary element against any theme (dark or
+        // light) instead of only the default black-on-white one.
+        color = mixColor(config.foregroundColor, config.backgroundColor, 0.25);
     }
 
     function draw(dc as Dc) as Void {
@@ -45,7 +48,7 @@ class DateComplication extends WatchFaceElement {
 
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
         if (showBorder) {
-            dc.drawRectangle(boxCenterX - boxWidth / 2, boxCenterY - boxHeight / 2, boxWidth, boxHeight);
+            dc.drawRoundedRectangle(boxCenterX - boxWidth / 2, boxCenterY - boxHeight / 2, boxWidth, boxHeight, 6);
         }
         dc.drawText(boxCenterX, boxCenterY - textHeight / 2, font, dateString, Graphics.TEXT_JUSTIFY_CENTER);
     }

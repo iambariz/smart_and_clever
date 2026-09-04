@@ -2,6 +2,7 @@
 
     <string id="AppName">smartAndClever</string>
 
+    <string id="ThemePresetTitle">Theme Preset</string>
     <string id="BackgroundColorTitle">Background Color</string>
     <string id="ForegroundColorTitle">Foreground Color</string>
     <string id="NumeralStyleTitle">Hour Numerals</string>
@@ -46,10 +47,17 @@
     <string id="ShowCenterDotTitle">Show Center Dot</string>
 
     <string id="SettingsMenuTitle">Settings</string>
+    <string id="PresetsMenuTitle">Presets</string>
     <string id="ColorsMenuTitle">Colors</string>
     <string id="HandsMenuTitle">Numerals &amp; Hands</string>
     <string id="DateMenuTitle">Date</string>
     <string id="ComplicationsMenuTitle">Complications</string>
     <string id="ValueSelected">Selected</string>
+
+    <string id="PresetClassic">Classic</string>
+    <string id="PresetModern">Modern</string>
+    <string id="PresetMinimal">Minimal</string>
+    <string id="PresetBold">Bold</string>
+    <string id="PresetDaylight">Daylight</string>
 
 </strings>

@@ -33,6 +33,7 @@ class Background extends WatchUi.Drawable {
         var config = new WatchFaceConfig();
         config.numeralStyle = numeralStyleFromNumber(Properties.getValue("NumeralStyle") as Number);
         config.foregroundColor = Properties.getValue("ForegroundColor") as Number;
+        config.backgroundColor = Properties.getValue("BackgroundColor") as Number;
         config.hourMarkersDisplay = displayStyleFromBoolean(Properties.getValue("ShowHourMarkers") as Boolean);
         config.hourHandDisplay = displayStyleFromBoolean(Properties.getValue("ShowHourHand") as Boolean);
         config.minuteHandDisplay = displayStyleFromBoolean(Properties.getValue("ShowMinuteHand") as Boolean);

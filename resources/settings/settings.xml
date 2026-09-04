@@ -1,5 +1,15 @@
 <settings>
 
+    <setting propertyKey="@Properties.ThemePreset" title="@Strings.ThemePresetTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.PresetClassic</listEntry>
+            <listEntry value="1">@Strings.PresetModern</listEntry>
+            <listEntry value="2">@Strings.PresetMinimal</listEntry>
+            <listEntry value="3">@Strings.PresetBold</listEntry>
+            <listEntry value="4">@Strings.PresetDaylight</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.BackgroundColor" title="@Strings.BackgroundColorTitle">
         <settingConfig type="list">
             <listEntry value="0x000000">@Strings.ColorBlack</listEntry>

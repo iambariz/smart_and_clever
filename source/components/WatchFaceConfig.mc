@@ -16,6 +16,7 @@ import Toybox.Lang;
 class WatchFaceConfig {
     var numeralStyle as NumeralStyle = NUMERAL_STYLE_ROMAN;
     var foregroundColor as Number = 0xFFFFFF;
+    var backgroundColor as Number = 0x000000;
     var hourMarkersDisplay as DisplayStyle = DISPLAY_SHOWN;
     var hourHandDisplay as DisplayStyle = DISPLAY_SHOWN;
     var minuteHandDisplay as DisplayStyle = DISPLAY_SHOWN;
