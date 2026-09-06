@@ -17,9 +17,7 @@ class DateComplication extends WatchFaceElement {
         showDayOfWeek = config.dayOfWeekDisplay == DISPLAY_SHOWN;
         showDayNumber = config.dayNumberDisplay == DISPLAY_SHOWN;
         showBorder = config.dateBorderDisplay == DISPLAY_SHOWN;
-        // Dimmed toward the background rather than a fixed gray, so it
-        // reads as a subtle secondary element against any theme (dark or
-        // light) instead of only the default black-on-white one.
+        // Dimmed toward the background so it stays subtle on any theme.
         color = mixColor(config.foregroundColor, config.backgroundColor, 0.25);
     }
 

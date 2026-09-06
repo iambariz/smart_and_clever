@@ -46,12 +46,16 @@ class Background extends WatchUi.Drawable {
         config.dateBorderDisplay = displayStyleFromBoolean(Properties.getValue("ShowDateBorder") as Boolean);
         config.temperatureDisplay = displayStyleFromBoolean(Properties.getValue("ShowTemperature") as Boolean);
         config.temperaturePosition = positionFromNumber(Properties.getValue("TemperaturePosition") as Number);
+        config.temperatureColor = Properties.getValue("TemperatureColor") as Number;
         config.batteryDisplay = displayStyleFromBoolean(Properties.getValue("ShowBattery") as Boolean);
         config.batteryPosition = positionFromNumber(Properties.getValue("BatteryPosition") as Number);
+        config.batteryColor = Properties.getValue("BatteryColor") as Number;
         config.stepsDisplay = displayStyleFromBoolean(Properties.getValue("ShowSteps") as Boolean);
         config.stepsPosition = positionFromNumber(Properties.getValue("StepsPosition") as Number);
+        config.stepsColor = Properties.getValue("StepsColor") as Number;
         config.heartRateDisplay = displayStyleFromBoolean(Properties.getValue("ShowHeartRate") as Boolean);
         config.heartRatePosition = positionFromNumber(Properties.getValue("HeartRatePosition") as Number);
+        config.heartRateColor = Properties.getValue("HeartRateColor") as Number;
 
         var positionedComplications = [
             new TemperatureComplication(config),

@@ -1,11 +1,13 @@
 <properties>
 
-    <property id="ThemePreset" type="number">0</property>
+    <property id="DesignPreset" type="number">0</property>
+    <property id="ColorScheme" type="number">0</property>
     <!-- Internal bookkeeping only, no settings.xml entry - never shown in the
-         Connect app UI. Tracks which preset ThemePreset's value was last
-         applied for, so onSettingsChanged() can tell a real preset pick
-         apart from an unrelated settings change. -->
-    <property id="AppliedPreset" type="number">0</property>
+         Connect app UI. Tracks which pick DesignPreset/ColorScheme was last
+         applied for, so onSettingsChanged() can tell a real pick apart
+         from an unrelated settings change. -->
+    <property id="AppliedDesign" type="number">0</property>
+    <property id="AppliedColorScheme" type="number">0</property>
 
     <property id="BackgroundColor" type="number">0x000000</property>
     <property id="ForegroundColor" type="number">0xFFFFFF</property>
@@ -23,11 +25,15 @@
     <property id="ShowDateBorder" type="boolean">true</property>
     <property id="ShowTemperature" type="boolean">true</property>
     <property id="TemperaturePosition" type="number">3</property>
+    <property id="TemperatureColor" type="number">0xAAAAAA</property>
     <property id="ShowBattery" type="boolean">true</property>
     <property id="BatteryPosition" type="number">0</property>
+    <property id="BatteryColor" type="number">0xAAAAAA</property>
     <property id="ShowSteps" type="boolean">true</property>
     <property id="StepsPosition" type="number">2</property>
+    <property id="StepsColor" type="number">0xAAAAAA</property>
     <property id="ShowHeartRate" type="boolean">false</property>
     <property id="HeartRatePosition" type="number">3</property>
+    <property id="HeartRateColor" type="number">0xAAAAAA</property>
 
 </properties>

@@ -1,12 +1,20 @@
 <settings>
 
-    <setting propertyKey="@Properties.ThemePreset" title="@Strings.ThemePresetTitle">
+    <setting propertyKey="@Properties.DesignPreset" title="@Strings.DesignPresetTitle">
         <settingConfig type="list">
-            <listEntry value="0">@Strings.PresetClassic</listEntry>
-            <listEntry value="1">@Strings.PresetModern</listEntry>
-            <listEntry value="2">@Strings.PresetMinimal</listEntry>
-            <listEntry value="3">@Strings.PresetBold</listEntry>
-            <listEntry value="4">@Strings.PresetDaylight</listEntry>
+            <listEntry value="0">@Strings.DesignClassic</listEntry>
+            <listEntry value="1">@Strings.DesignModern</listEntry>
+            <listEntry value="2">@Strings.DesignMinimal</listEntry>
+            <listEntry value="3">@Strings.DesignBold</listEntry>
+            <listEntry value="4">@Strings.DesignSleek</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.ColorScheme" title="@Strings.ColorSchemeTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.ColorSchemeMonochrome</listEntry>
+            <listEntry value="1">@Strings.ColorSchemeCrimson</listEntry>
+            <listEntry value="2">@Strings.ColorSchemeDaylight</listEntry>
         </settingConfig>
     </setting>
 

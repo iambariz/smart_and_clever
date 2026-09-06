@@ -29,12 +29,16 @@ class WatchFaceConfig {
     var dateBorderDisplay as DisplayStyle = DISPLAY_SHOWN;
     var temperatureDisplay as DisplayStyle = DISPLAY_SHOWN;
     var temperaturePosition as Position = POSITION_LEFT;
+    var temperatureColor as Number = 0xAAAAAA;
     var batteryDisplay as DisplayStyle = DISPLAY_SHOWN;
     var batteryPosition as Position = POSITION_TOP;
+    var batteryColor as Number = 0xAAAAAA;
     var stepsDisplay as DisplayStyle = DISPLAY_SHOWN;
     var stepsPosition as Position = POSITION_BOTTOM;
+    var stepsColor as Number = 0xAAAAAA;
     var heartRateDisplay as DisplayStyle = DISPLAY_HIDDEN;
     var heartRatePosition as Position = POSITION_LEFT;
+    var heartRateColor as Number = 0xAAAAAA;
 
     function initialize() {
     }

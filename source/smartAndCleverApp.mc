@@ -22,22 +22,19 @@ class smartAndCleverApp extends Application.AppBase {
         return [ new smartAndCleverView() ];
     }
 
-    // New app settings have been received so trigger a UI update. Also
-    // covers the Connect app's "Theme Preset" list: unlike the on-device
-    // PresetMenu (which calls applyPreset() directly on selection), picking
-    // a preset from the phone/web app only changes the ThemePreset
-    // property itself - so fan it out to the underlying color/hand/numeral
-    // properties here. Compared against AppliedPreset (an internal
-    // property with no settings.xml entry, so it never shows in the app UI)
-    // to avoid re-applying the same preset - and clobbering any properties
-    // the user tweaked individually since - on every unrelated settings
-    // change.
+    // A Connect-app pick only changes DesignPreset/ColorScheme itself, so
+    // fan it out here the same way the on-device PresetMenu does directly.
     function onSettingsChanged() as Void {
-        var selected = Properties.getValue("ThemePreset") as Number;
-        var applied = Properties.getValue("AppliedPreset") as Number;
-        if (selected != applied) {
-            applyPreset(selected);
+        var selectedDesign = Properties.getValue("DesignPreset") as Number;
+        if (selectedDesign != Properties.getValue("AppliedDesign") as Number) {
+            applyPreset(designList(), selectedDesign, "DesignPreset", "AppliedDesign");
         }
+
+        var selectedColorScheme = Properties.getValue("ColorScheme") as Number;
+        if (selectedColorScheme != Properties.getValue("AppliedColorScheme") as Number) {
+            applyPreset(colorSchemeList(), selectedColorScheme, "ColorScheme", "AppliedColorScheme");
+        }
+
         WatchUi.requestUpdate();
     }
 

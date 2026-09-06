@@ -3,8 +3,11 @@ import Toybox.Lang;
 import Toybox.Weather;
 
 class TemperatureComplication extends PositionedComplication {
+    var color as Number;
+
     function initialize(config as WatchFaceConfig) {
         PositionedComplication.initialize(config.temperatureDisplay, config.temperaturePosition);
+        color = config.temperatureColor;
     }
 
     function draw(dc as Dc) as Void {
@@ -19,7 +22,7 @@ class TemperatureComplication extends PositionedComplication {
         var tempStr = conditions.temperature.format("%.1f") + "°C";
         var textHeight = dc.getTextDimensions(tempStr, Graphics.FONT_XTINY)[1];
 
-        dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
         dc.drawText(point[0], point[1] - textHeight / 2, Graphics.FONT_XTINY, tempStr, Graphics.TEXT_JUSTIFY_CENTER);
     }
 }

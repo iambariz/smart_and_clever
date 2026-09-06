@@ -9,8 +9,21 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
     function onSelect(menuItem as WatchUi.MenuItem) as Void {
         var id = menuItem.getId() as String;
 
-        if (id.equals("Presets")) {
-            WatchUi.pushView(new PresetMenu(), new PresetMenuDelegate(), WatchUi.SLIDE_LEFT);
+        if (id.equals("Design")) {
+            WatchUi.pushView(
+                new PresetMenu(Rez.Strings.DesignPresetTitle, designList()),
+                new PresetMenuDelegate(designList(), "DesignPreset", "AppliedDesign"),
+                WatchUi.SLIDE_LEFT
+            );
+            return;
+        }
+
+        if (id.equals("ColorScheme")) {
+            WatchUi.pushView(
+                new PresetMenu(Rez.Strings.ColorSchemeTitle, colorSchemeList()),
+                new PresetMenuDelegate(colorSchemeList(), "ColorScheme", "AppliedColorScheme"),
+                WatchUi.SLIDE_LEFT
+            );
             return;
         }
 

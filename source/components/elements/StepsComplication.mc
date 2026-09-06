@@ -3,8 +3,11 @@ import Toybox.Lang;
 import Toybox.ActivityMonitor;
 
 class StepsComplication extends PositionedComplication {
+    var color as Number;
+
     function initialize(config as WatchFaceConfig) {
         PositionedComplication.initialize(config.stepsDisplay, config.stepsPosition);
+        color = config.stepsColor;
     }
 
     function draw(dc as Dc) as Void {
@@ -19,7 +22,7 @@ class StepsComplication extends PositionedComplication {
         var stepsStr = steps.toString();
         var textHeight = dc.getTextDimensions(stepsStr, Graphics.FONT_XTINY)[1];
 
-        dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
         dc.drawText(point[0], point[1] - textHeight / 2, Graphics.FONT_XTINY, stepsStr, Graphics.TEXT_JUSTIFY_CENTER);
     }
 }

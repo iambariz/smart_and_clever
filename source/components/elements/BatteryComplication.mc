@@ -3,8 +3,11 @@ import Toybox.Lang;
 import Toybox.System;
 
 class BatteryComplication extends PositionedComplication {
+    var color as Number;
+
     function initialize(config as WatchFaceConfig) {
         PositionedComplication.initialize(config.batteryDisplay, config.batteryPosition);
+        color = config.batteryColor;
     }
 
     function draw(dc as Dc) as Void {
@@ -16,7 +19,7 @@ class BatteryComplication extends PositionedComplication {
         var batteryStr = battery.format("%.0f") + "%";
         var textHeight = dc.getTextDimensions(batteryStr, Graphics.FONT_XTINY)[1];
 
-        dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
         dc.drawText(point[0], point[1] - textHeight / 2, Graphics.FONT_XTINY, batteryStr, Graphics.TEXT_JUSTIFY_CENTER);
     }
 }
