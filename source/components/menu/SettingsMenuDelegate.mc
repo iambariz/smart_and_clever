@@ -11,7 +11,7 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
 
         if (id.equals("Design")) {
             WatchUi.pushView(
-                new PresetMenu(Rez.Strings.DesignPresetTitle, designList()),
+                new PresetMenu(Rez.Strings.DesignPresetTitle, designList(), null),
                 new PresetMenuDelegate(designList(), "DesignPreset", "AppliedDesign"),
                 WatchUi.SLIDE_LEFT
             );
@@ -20,7 +20,7 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
 
         if (id.equals("ColorScheme")) {
             WatchUi.pushView(
-                new PresetMenu(Rez.Strings.ColorSchemeTitle, colorSchemeList()),
+                new PresetMenu(Rez.Strings.ColorSchemeTitle, colorSchemeList(), "ForegroundColor"),
                 new PresetMenuDelegate(colorSchemeList(), "ColorScheme", "AppliedColorScheme"),
                 WatchUi.SLIDE_LEFT
             );

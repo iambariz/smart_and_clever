@@ -15,6 +15,16 @@
             <listEntry value="0">@Strings.ColorSchemeMonochrome</listEntry>
             <listEntry value="1">@Strings.ColorSchemeCrimson</listEntry>
             <listEntry value="2">@Strings.ColorSchemeDaylight</listEntry>
+            <listEntry value="3">@Strings.ColorSchemeTokyoNight</listEntry>
+            <listEntry value="4">@Strings.ColorSchemeDracula</listEntry>
+            <listEntry value="5">@Strings.ColorSchemeNord</listEntry>
+            <listEntry value="6">@Strings.ColorSchemeGruvbox</listEntry>
+            <listEntry value="7">@Strings.ColorSchemeOneDark</listEntry>
+            <listEntry value="8">@Strings.ColorSchemeMonokai</listEntry>
+            <listEntry value="9">@Strings.ColorSchemeCatppuccin</listEntry>
+            <listEntry value="10">@Strings.ColorSchemeSolarized</listEntry>
+            <listEntry value="11">@Strings.ColorSchemeRosePine</listEntry>
+            <listEntry value="12">@Strings.ColorSchemeAyuDark</listEntry>
         </settingConfig>
     </setting>
 

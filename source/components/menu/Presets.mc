@@ -20,7 +20,7 @@ function designList() as Array<Dictionary> {
                 "NumeralStyle" => 1,
                 "HandStyle" => 3,
                 "ShowHourMarkers" => true,
-                "ShowCenterDot" => false
+                "ShowCenterDot" => true
             }
         },
         {
@@ -29,7 +29,7 @@ function designList() as Array<Dictionary> {
                 "NumeralStyle" => 2,
                 "HandStyle" => 0,
                 "ShowHourMarkers" => false,
-                "ShowCenterDot" => false
+                "ShowCenterDot" => true
             }
         },
         {
@@ -53,42 +53,41 @@ function designList() as Array<Dictionary> {
     ] as Array<Dictionary>;
 }
 
-// Every scheme sets all six color keys so switching schemes fully resets.
+// Every scheme is exactly two colors - a background and one accent shared
+// by every hand (Foreground) and every complication. Settled on after
+// design review: a different hue per complication read as noisy once all
+// four were visible on the dial at once, while one shared accent reads as
+// intentional regardless of which complications are enabled. Editor-theme
+// accents are each that theme's own most iconic syntax-highlight color.
+function scheme(label as ResourceId, bg as Number, accent as Number) as Dictionary {
+    return {
+        :label => label,
+        :values => {
+            "BackgroundColor" => bg,
+            "ForegroundColor" => accent,
+            "TemperatureColor" => accent,
+            "BatteryColor" => accent,
+            "StepsColor" => accent,
+            "HeartRateColor" => accent
+        }
+    } as Dictionary;
+}
+
 function colorSchemeList() as Array<Dictionary> {
     return [
-        {
-            :label => Rez.Strings.ColorSchemeMonochrome,
-            :values => {
-                "BackgroundColor" => 0x000000,
-                "ForegroundColor" => 0xFFFFFF,
-                "TemperatureColor" => 0xAAAAAA,
-                "BatteryColor" => 0xAAAAAA,
-                "StepsColor" => 0xAAAAAA,
-                "HeartRateColor" => 0xAAAAAA
-            }
-        },
-        {
-            :label => Rez.Strings.ColorSchemeCrimson,
-            :values => {
-                "BackgroundColor" => 0x000000,
-                "ForegroundColor" => 0xFF0000,
-                "TemperatureColor" => 0xAAAAAA,
-                "BatteryColor" => 0xAAAAAA,
-                "StepsColor" => 0xAAAAAA,
-                "HeartRateColor" => 0xAAAAAA
-            }
-        },
-        {
-            :label => Rez.Strings.ColorSchemeDaylight,
-            :values => {
-                "BackgroundColor" => 0xFFFFFF,
-                "ForegroundColor" => 0x000000,
-                "TemperatureColor" => 0x555555,
-                "BatteryColor" => 0x555555,
-                "StepsColor" => 0x555555,
-                "HeartRateColor" => 0x555555
-            }
-        }
+        scheme(Rez.Strings.ColorSchemeMonochrome, 0x000000, 0xFFFFFF),
+        scheme(Rez.Strings.ColorSchemeCrimson,    0x000000, 0xFF0000),
+        scheme(Rez.Strings.ColorSchemeDaylight,   0xFFFFFF, 0x000000),
+        scheme(Rez.Strings.ColorSchemeTokyoNight, 0x1A1B26, 0x7AA2F7),
+        scheme(Rez.Strings.ColorSchemeDracula,    0x282A36, 0xBD93F9),
+        scheme(Rez.Strings.ColorSchemeNord,       0x2E3440, 0x88C0D0),
+        scheme(Rez.Strings.ColorSchemeGruvbox,    0x282828, 0xFABD2F),
+        scheme(Rez.Strings.ColorSchemeOneDark,    0x282C34, 0x61AFEF),
+        scheme(Rez.Strings.ColorSchemeMonokai,    0x272822, 0xA6E22E),
+        scheme(Rez.Strings.ColorSchemeCatppuccin, 0x1E1E2E, 0xCBA6F7),
+        scheme(Rez.Strings.ColorSchemeSolarized,  0x002B36, 0x268BD2),
+        scheme(Rez.Strings.ColorSchemeRosePine,   0x191724, 0xEBBCBA),
+        scheme(Rez.Strings.ColorSchemeAyuDark,    0x0F1419, 0xE6B450)
     ] as Array<Dictionary>;
 }
 
