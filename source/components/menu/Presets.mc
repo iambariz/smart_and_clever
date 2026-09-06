@@ -53,41 +53,47 @@ function designList() as Array<Dictionary> {
     ] as Array<Dictionary>;
 }
 
-// Every scheme is exactly two colors - a background and one accent shared
-// by every hand (Foreground) and every complication. Settled on after
-// design review: a different hue per complication read as noisy once all
-// four were visible on the dial at once, while one shared accent reads as
-// intentional regardless of which complications are enabled. Editor-theme
-// accents are each that theme's own most iconic syntax-highlight color.
-function scheme(label as ResourceId, bg as Number, accent as Number) as Dictionary {
+// Every scheme is a background plus two hues: "main" (hour/minute hands -
+// HourHand darkens it itself, so this is the normal-strength value - and
+// every complication) and "accent" (second hand + center dot only). Accent
+// is deliberately exclusive to those two rather than shared with the
+// complications too - one genuinely special element reads as an accent;
+// five things sharing "the loud color" doesn't. Editor-theme mains/accents
+// are each pulled from that theme's own syntax-highlight palette, not
+// picked to just "look nice." Accent is always a genuinely bold, distinct
+// hue from main - even Monochrome/Crimson/Daylight get a real pop color
+// rather than mirroring main, since a white/gray "accent" reads as no
+// accent at all.
+function scheme(label as ResourceId, bg as Number, main as Number, accent as Number) as Dictionary {
     return {
         :label => label,
         :values => {
             "BackgroundColor" => bg,
-            "ForegroundColor" => accent,
-            "TemperatureColor" => accent,
-            "BatteryColor" => accent,
-            "StepsColor" => accent,
-            "HeartRateColor" => accent
+            "ForegroundColor" => main,
+            "AccentColor" => accent,
+            "TemperatureColor" => main,
+            "BatteryColor" => main,
+            "StepsColor" => main,
+            "HeartRateColor" => main
         }
     } as Dictionary;
 }
 
 function colorSchemeList() as Array<Dictionary> {
     return [
-        scheme(Rez.Strings.ColorSchemeMonochrome, 0x000000, 0xFFFFFF),
-        scheme(Rez.Strings.ColorSchemeCrimson,    0x000000, 0xFF0000),
-        scheme(Rez.Strings.ColorSchemeDaylight,   0xFFFFFF, 0x000000),
-        scheme(Rez.Strings.ColorSchemeTokyoNight, 0x1A1B26, 0x7AA2F7),
-        scheme(Rez.Strings.ColorSchemeDracula,    0x282A36, 0xBD93F9),
-        scheme(Rez.Strings.ColorSchemeNord,       0x2E3440, 0x88C0D0),
-        scheme(Rez.Strings.ColorSchemeGruvbox,    0x282828, 0xFABD2F),
-        scheme(Rez.Strings.ColorSchemeOneDark,    0x282C34, 0x61AFEF),
-        scheme(Rez.Strings.ColorSchemeMonokai,    0x272822, 0xA6E22E),
-        scheme(Rez.Strings.ColorSchemeCatppuccin, 0x1E1E2E, 0xCBA6F7),
-        scheme(Rez.Strings.ColorSchemeSolarized,  0x002B36, 0x268BD2),
-        scheme(Rez.Strings.ColorSchemeRosePine,   0x191724, 0xEBBCBA),
-        scheme(Rez.Strings.ColorSchemeAyuDark,    0x0F1419, 0xE6B450)
+        scheme(Rez.Strings.ColorSchemeMonochrome, 0x000000, 0xFFFFFF, 0xFFCC00),
+        scheme(Rez.Strings.ColorSchemeCrimson,    0x000000, 0xFF0000, 0x00CCFF),
+        scheme(Rez.Strings.ColorSchemeDaylight,   0xFFFFFF, 0x000000, 0x0066CC),
+        scheme(Rez.Strings.ColorSchemeTokyoNight, 0x1A1B26, 0x7AA2F7, 0xF7768E),
+        scheme(Rez.Strings.ColorSchemeDracula,    0x282A36, 0xBD93F9, 0x50FA7B),
+        scheme(Rez.Strings.ColorSchemeNord,       0x2E3440, 0x88C0D0, 0xBF616A),
+        scheme(Rez.Strings.ColorSchemeGruvbox,    0x282828, 0xFABD2F, 0xFB4934),
+        scheme(Rez.Strings.ColorSchemeOneDark,    0x282C34, 0x61AFEF, 0xE06C75),
+        scheme(Rez.Strings.ColorSchemeMonokai,    0x272822, 0xA6E22E, 0xF92672),
+        scheme(Rez.Strings.ColorSchemeCatppuccin, 0x1E1E2E, 0xCBA6F7, 0xF38BA8),
+        scheme(Rez.Strings.ColorSchemeSolarized,  0x002B36, 0x268BD2, 0xDC322F),
+        scheme(Rez.Strings.ColorSchemeRosePine,   0x191724, 0xEBBCBA, 0x9CCFD8),
+        scheme(Rez.Strings.ColorSchemeAyuDark,    0x0F1419, 0xE6B450, 0xF07178)
     ] as Array<Dictionary>;
 }
 

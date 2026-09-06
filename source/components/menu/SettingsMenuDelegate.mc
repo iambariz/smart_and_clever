@@ -84,6 +84,17 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
                             { :value => 0xFF0000, :label => Rez.Strings.ColorRed },
                             { :value => 0xFFFFFF, :label => Rez.Strings.ColorWhite }
                         ]
+                    },
+                    {
+                        :kind => :options,
+                        :id => "AccentColor",
+                        :label => Rez.Strings.AccentColorTitle,
+                        :options => [
+                            { :value => 0x000000, :label => Rez.Strings.ColorBlack },
+                            { :value => 0x0000FF, :label => Rez.Strings.ColorBlue },
+                            { :value => 0xFF0000, :label => Rez.Strings.ColorRed },
+                            { :value => 0xFFFFFF, :label => Rez.Strings.ColorWhite }
+                        ]
                     }
                 ] as Array<Dictionary>;
 

@@ -11,7 +11,7 @@ class SecondHand extends WatchFaceElement {
 
     function initialize(config as WatchFaceConfig) {
         WatchFaceElement.initialize(config.secondHandDisplay);
-        color = config.foregroundColor;
+        color = config.accentColor;
     }
 
     function draw(dc as Dc) as Void {

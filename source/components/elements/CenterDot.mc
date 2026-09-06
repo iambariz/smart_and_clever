@@ -6,11 +6,20 @@ import Toybox.Lang;
 class CenterDot extends WatchFaceElement {
     var handStyle as HandStyle;
     var color as Number;
+    var ringColor as Number;
 
     function initialize(config as WatchFaceConfig) {
         WatchFaceElement.initialize(config.centerDotDisplay);
         handStyle = config.handStyle;
-        color = config.foregroundColor;
+        // Inner disc matches the second hand it caps - the pivot reads as
+        // where the sweeping second hand "emerges from." The ring matches
+        // the hour/minute hands' main color instead of a hardcoded neutral,
+        // so the cap is built from the same two hues as the hands
+        // themselves and needs no separate background-contrast logic - main
+        // is already guaranteed legible against this scheme's background,
+        // since the hour/minute hands already rely on that.
+        color = config.accentColor;
+        ringColor = config.foregroundColor;
     }
 
     function draw(dc as Dc) as Void {
@@ -40,7 +49,7 @@ class CenterDot extends WatchFaceElement {
             innerRadius = 1;
         }
 
-        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(ringColor, Graphics.COLOR_TRANSPARENT);
         dc.fillCircle(centerX, centerY, radius);
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
         dc.fillCircle(centerX, centerY, innerRadius);

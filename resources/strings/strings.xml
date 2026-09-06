@@ -6,6 +6,7 @@
     <string id="ColorSchemeTitle">Color Scheme</string>
     <string id="BackgroundColorTitle">Background Color</string>
     <string id="ForegroundColorTitle">Foreground Color</string>
+    <string id="AccentColorTitle">Accent Color</string>
     <string id="NumeralStyleTitle">Hour Numerals</string>
     <string id="ShowHourMarkersTitle">Show Hour Markers</string>
     <string id="ShowHourHandTitle">Show Hour Hand</string>
