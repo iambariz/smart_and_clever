@@ -1,14 +1,17 @@
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.Weather;
+import Toybox.WatchUi;
 
-// Placeholder text label for now, not a drawn icon - matches the plain
-// text style every other complication already uses. The category mapping
-// is the real work (collapsing Weather.Condition's 50+ specific values
-// into a handful of buckets); swapping this for a drawn/bitmap icon later
-// only touches draw(), categoryFor() stays the same.
+// Draws one character of a custom bitmap icon font (resources/fonts/) -
+// same technique real weather-showing Connect IQ faces use (e.g. Crystal
+// Face's weather-icons-20.fnt): each condition maps to a character, drawn
+// with a normal dc.drawText() call, just like every other complication's
+// plain text. The font is a grayscale PNG the OS tints via dc.setColor,
+// so it follows this complication's own color the same way text would.
 class WeatherIconComplication extends PositionedComplication {
     var color as Number;
+    var iconFont as Graphics.FontReference?;
 
     function initialize(config as WatchFaceConfig) {
         PositionedComplication.initialize(config.weatherIconDisplay, config.weatherIconPosition);
@@ -21,21 +24,25 @@ class WeatherIconComplication extends PositionedComplication {
             return;
         }
 
+        if (iconFont == null) {
+            iconFont = WatchUi.loadResource(Rez.Fonts.WeatherIconsFont) as Graphics.FontReference;
+        }
+
         var category = categoryFor(conditions.condition as Weather.Condition);
-        var label = labelFor(category);
+        var glyph = glyphFor(category);
 
         var radius = DialGeometry.radius(dc);
         var point = DialGeometry.pointForPosition(dc, position, radius * 0.45);
-        var textHeight = dc.getTextDimensions(label, Graphics.FONT_XTINY)[1];
+        var textHeight = dc.getTextDimensions(glyph, iconFont)[1];
 
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(point[0], point[1] - textHeight / 2, Graphics.FONT_XTINY, label, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(point[0], point[1] - textHeight / 2, iconFont, glyph, Graphics.TEXT_JUSTIFY_CENTER);
     }
 
     // Weather.Condition has 50+ specific values (light rain, heavy rain,
     // rain/snow mix, etc.) - collapsed here into a handful of buckets.
     // Anything exotic (dust, volcanic ash, tornado, hurricane) falls back
-    // to "Cloudy" rather than needing its own label.
+    // to the plain cloud glyph rather than needing its own icon.
     function categoryFor(condition as Weather.Condition) as Symbol {
         if (condition == Weather.CONDITION_CLEAR || condition == Weather.CONDITION_FAIR ||
             condition == Weather.CONDITION_MOSTLY_CLEAR || condition == Weather.CONDITION_PARTLY_CLEAR) {
@@ -66,16 +73,17 @@ class WeatherIconComplication extends PositionedComplication {
         return :cloud;
     }
 
-    function labelFor(category as Symbol) as String {
+    // Matches the char ids in resources/fonts/weather-icons.fnt (A-E).
+    function glyphFor(category as Symbol) as String {
         if (category == :sun) {
-            return "Sunny";
+            return "A";
+        } else if (category == :cloud) {
+            return "B";
         } else if (category == :rain) {
-            return "Rain";
+            return "C";
         } else if (category == :snow) {
-            return "Snow";
-        } else if (category == :storm) {
-            return "Storm";
+            return "D";
         }
-        return "Cloudy";
+        return "E";
     }
 }
