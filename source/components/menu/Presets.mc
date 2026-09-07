@@ -74,7 +74,8 @@ function scheme(label as ResourceId, bg as Number, main as Number, accent as Num
             "TemperatureColor" => main,
             "BatteryColor" => main,
             "StepsColor" => main,
-            "HeartRateColor" => main
+            "HeartRateColor" => main,
+            "WeatherIconColor" => main
         }
     } as Dictionary;
 }

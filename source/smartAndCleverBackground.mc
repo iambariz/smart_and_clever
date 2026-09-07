@@ -57,12 +57,16 @@ class Background extends WatchUi.Drawable {
         config.heartRateDisplay = displayStyleFromBoolean(Properties.getValue("ShowHeartRate") as Boolean);
         config.heartRatePosition = positionFromNumber(Properties.getValue("HeartRatePosition") as Number);
         config.heartRateColor = Properties.getValue("HeartRateColor") as Number;
+        config.weatherIconDisplay = displayStyleFromBoolean(Properties.getValue("ShowWeatherIcon") as Boolean);
+        config.weatherIconPosition = positionFromNumber(Properties.getValue("WeatherIconPosition") as Number);
+        config.weatherIconColor = Properties.getValue("WeatherIconColor") as Number;
 
         var positionedComplications = [
             new TemperatureComplication(config),
             new BatteryComplication(config),
             new StepsComplication(config),
-            new HeartRateComplication(config)
+            new HeartRateComplication(config),
+            new WeatherIconComplication(config)
         ] as Array<PositionedComplication>;
         resolvePositionConflicts(positionedComplications);
 
@@ -77,6 +81,7 @@ class Background extends WatchUi.Drawable {
             positionedComplications[1],
             positionedComplications[2],
             positionedComplications[3],
+            positionedComplications[4],
             new HourHand(config),
             new MinuteHand(config),
             new SecondHand(config),

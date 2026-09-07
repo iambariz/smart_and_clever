@@ -27,7 +27,7 @@
     <property id="ShowTemperature" type="boolean">true</property>
     <property id="TemperaturePosition" type="number">3</property>
     <property id="TemperatureColor" type="number">0xAAAAAA</property>
-    <property id="ShowBattery" type="boolean">true</property>
+    <property id="ShowBattery" type="boolean">false</property>
     <property id="BatteryPosition" type="number">0</property>
     <property id="BatteryColor" type="number">0xAAAAAA</property>
     <property id="ShowSteps" type="boolean">true</property>
@@ -36,5 +36,8 @@
     <property id="ShowHeartRate" type="boolean">false</property>
     <property id="HeartRatePosition" type="number">3</property>
     <property id="HeartRateColor" type="number">0xAAAAAA</property>
+    <property id="ShowWeatherIcon" type="boolean">true</property>
+    <property id="WeatherIconPosition" type="number">0</property>
+    <property id="WeatherIconColor" type="number">0xAAAAAA</property>
 
 </properties>

@@ -145,7 +145,9 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
                     { :kind => :toggle, :id => "ShowSteps", :label => Rez.Strings.ShowStepsTitle },
                     { :kind => :options, :id => "StepsPosition", :label => Rez.Strings.StepsPositionTitle, :options => positionOptions() },
                     { :kind => :toggle, :id => "ShowHeartRate", :label => Rez.Strings.ShowHeartRateTitle },
-                    { :kind => :options, :id => "HeartRatePosition", :label => Rez.Strings.HeartRatePositionTitle, :options => positionOptions() }
+                    { :kind => :options, :id => "HeartRatePosition", :label => Rez.Strings.HeartRatePositionTitle, :options => positionOptions() },
+                    { :kind => :toggle, :id => "ShowWeatherIcon", :label => Rez.Strings.ShowWeatherIconTitle },
+                    { :kind => :options, :id => "WeatherIconPosition", :label => Rez.Strings.WeatherIconPositionTitle, :options => positionOptions() }
                 ] as Array<Dictionary>;
 
             default:

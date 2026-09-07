@@ -19,7 +19,7 @@ class TemperatureComplication extends PositionedComplication {
         var radius = DialGeometry.radius(dc);
         var point = DialGeometry.pointForPosition(dc, position, radius * 0.45);
 
-        var tempStr = conditions.temperature.format("%.1f") + "°C";
+        var tempStr = conditions.temperature.format("%.0f") + "°C";
         var textHeight = dc.getTextDimensions(tempStr, Graphics.FONT_XTINY)[1];
 
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);

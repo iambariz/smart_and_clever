@@ -40,6 +40,9 @@ class WatchFaceConfig {
     var heartRateDisplay as DisplayStyle = DISPLAY_HIDDEN;
     var heartRatePosition as Position = POSITION_LEFT;
     var heartRateColor as Number = 0xAAAAAA;
+    var weatherIconDisplay as DisplayStyle = DISPLAY_HIDDEN;
+    var weatherIconPosition as Position = POSITION_LEFT;
+    var weatherIconColor as Number = 0xAAAAAA;
 
     function initialize() {
     }
